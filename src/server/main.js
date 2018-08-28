@@ -1,3 +1,3 @@
-import TwitterCard from 'src/common/components/TwitterCard'
+import TwitterCard from 'common/components/TwitterCard'
 
 console.log(TwitterCard)

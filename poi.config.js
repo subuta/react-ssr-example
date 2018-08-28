@@ -1,7 +1,5 @@
 const _ = require('lodash')
-const path = require('path')
-
-const rootPath = path.resolve(process.cwd())
+const { SRC_PATH } = require('./config')
 
 // setting for building docs
 module.exports = (options, req) => ({
@@ -33,7 +31,7 @@ module.exports = (options, req) => ({
         // add resolve.root to project root.
         modules: [
           ..._.get(config, 'resolve.modules', []),
-          rootPath
+          SRC_PATH
         ]
       }
     })

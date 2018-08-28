@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "front": "poi",
-    "server": "NODE_PATH=. node src/server/index.js"
+    "serve": "NODE_PATH=src node src/server/index.js",
+    "servep": "NODE_ENV=production NODE_PATH=dist node dist/server/index.js",
+    "babel": "rm -rf dist && babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "lodash": "^4.17.10"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
