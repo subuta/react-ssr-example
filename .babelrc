@@ -1,8 +1,23 @@
 {
   "presets": [
-    "poi"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-react"
   ],
   "plugins": [
-    "react-hot-loader/babel"
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "helpers": false,
+        "regenerator": true
+      }
+    ],
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 }

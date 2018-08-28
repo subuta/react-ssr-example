@@ -8,6 +8,11 @@ module.exports = (options, req) => ({
   entry: './src/front/index.js',
   dist: 'public',
 
+  // Babel settings for poi.
+  presets: [
+    "poi"
+  ],
+
   transformModules: [],
 
   devServer: {

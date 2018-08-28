@@ -4,7 +4,8 @@
   "description": "Server-side-rendered react with GraphQL example.",
   "main": "index.js",
   "scripts": {
-    "dev": "poi"
+    "front": "poi",
+    "server": "NODE_PATH=. node src/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,12 @@
     "lodash": "^4.17.10"
   },
   "devDependencies": {
-    "react-hot-loader": "^4.3.3",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "clear-module": "^3.0.0",
     "envify": "^4.1.0",
+    "react-hot-loader": "^4.3.3",
     "sane": "^3.0.0",
     "standard": "^11.0.1"
   }

@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server';
 import TwitterCard from 'src/common/components/TwitterCard'
