@@ -1,0 +1,41 @@
+{
+  "name": "react-ssr-gql-example",
+  "version": "1.0.0",
+  "description": "Server-side-rendered react with GraphQL example.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "poi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subuta/react-ssr-gql-example.git"
+  },
+  "author": "subuta <shunta.3110@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/subuta/react-ssr-gql-example/issues"
+  },
+  "homepage": "https://github.com/subuta/react-ssr-gql-example#readme",
+  "dependencies": {
+    "poi": "^10.2.9",
+    "isomorphic-unfetch": "^2.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "recompose": "^0.27.1",
+    "dotenv": "^6.0.0",
+    "esm": "^3.0.72",
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-send": "^5.0.0",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "react-hot-loader": "^4.3.3",
+    "clear-module": "^3.0.0",
+    "envify": "^4.1.0",
+    "sane": "^3.0.0",
+    "standard": "^11.0.1"
+  }
+}
