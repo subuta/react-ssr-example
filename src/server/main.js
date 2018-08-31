@@ -1,18 +1,15 @@
 import Koa from 'koa'
 import logger from 'koa-logger'
 import koaBody from 'koa-body'
-import send from 'koa-send'
-import e2k from 'express-to-koa'
+import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
-
-import TwitterCard from '../common/components/TwitterCard'
-
-console.log(TwitterCard)
+import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
 
 import {
   ROOT_DIR,
-  PUBLIC_DIR
+  PUBLIC_DIR,
+  WEBPACK_CONFIG_PATH
 } from '../../config'
 
 const {
@@ -28,57 +25,51 @@ app.use(logger())
 // parse body
 app.use(koaBody())
 
+// otherwise PUBLIC_DIR
+app.use(serve(PUBLIC_DIR));
+
 // detect is dev
 const dev = process.env.NODE_ENV !== 'production'
 
 if (dev) {
   const webpack = require('webpack')
-  const webpackDevMiddleware = require('webpack-dev-middleware')
-
-  const config = require('../../webpack.config.js')
+  const config = require(WEBPACK_CONFIG_PATH)
   const compiler = webpack(config)
 
-  // Tell express to use the webpack-dev-middleware and use the webpack.config.js
-  // configuration file as a base.
-  app.use(e2k(webpackDevMiddleware(compiler, {
+  app.use(devMiddleware(compiler, {
     noInfo: true,
     logLevel: 'silent',
     publicPath: config.output.publicPath
-  })))
+  }))
 
-  app.use(e2k(require('webpack-hot-middleware')(compiler, {
+  app.use(hotMiddleware(compiler, {
     log: false
-  })))
+  }))
 
   // Server side hot-module-replacement :)
   const watcher = require('sane')(path.resolve(ROOT_DIR, './src/server'))
   watcher.on('ready', () => {
     watcher.on('all', () => {
-      console.log('Clearing /server module cache from server')
+      console.log('Clearing src/server module cache from server')
       clearModule.match(/src\/server/)
     })
   })
 }
 
-// // Register pages routes/allowedMethods
-// if (dev) {
-//   // Dynamic import modules for development(With no-module-cache).
-//   // SEE: https://github.com/glenjamin/ultimate-hot-reloading-example/blob/master/server.js
-//   app.use((...args) => require('./server/routes').default.routes().apply(null, args))
-//   app.use((...args) => require('./server/routes').default.allowedMethods().apply(null, args))
-// } else {
-//   // Use modules statically otherwise (prod/test).
-//   const routes = require('./server/routes').default
-//   app.use(routes.routes())
-//   app.use(routes.allowedMethods())
-// }
+// Register pages routes/allowedMethods
+if (dev) {
+  // Dynamic import modules for development(With no-module-cache).
+  // SEE: https://github.com/glenjamin/ultimate-hot-reloading-example/blob/master/server.js
+  app.use((...args) => require('./pages').default.routes().apply(null, args))
+  app.use((...args) => require('./pages').default.allowedMethods().apply(null, args))
+} else {
+  // Use modules statically otherwise (prod/test).
+  const pages = require('./pages').default
+  app.use(pages.routes())
+  app.use(pages.allowedMethods())
+}
 
-// otherwise PUBLIC_DIR
-app.use(async (ctx) => {
-  await send(ctx, ctx.path, {root: PUBLIC_DIR, index: 'index.html'})
-})
-
-// Serve the files on port 3000.
+// Serve the files on port.
 app.listen(port, function () {
   console.log(`Example app listening on port ${port}!`)
 })

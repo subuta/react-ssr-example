@@ -15,7 +15,6 @@ const {
   ROOT_DIR,
   FRONT_DIR,
   SRC_DIR,
-  DIST_DIR,
   PUBLIC_DIR
 } = require('./config.js')
 
@@ -38,7 +37,7 @@ config
   .devtool(dev ? 'cheap-module-source-map' : false)
   // Modify output settings
   .output
-  .path(DIST_DIR)
+  .path(PUBLIC_DIR)
   .publicPath('/')
   .filename('[name].bundle.js')
 
@@ -57,7 +56,7 @@ config.module
   .options(babelrc)
 
 config.devServer
-  .contentBase(DIST_DIR)
+  .contentBase(PUBLIC_DIR)
   .quiet(true)
 
 // Enable better caching for webpack compilation.
@@ -77,7 +76,7 @@ config
 // Clean directory before compile.
 config
   .plugin('clean')
-  .use(CleanWebpackPlugin, [['dist'], {
+  .use(CleanWebpackPlugin, [['public/**/*.js'], {
     exclude: ['index.html'],
     beforeEmit: true
   }])

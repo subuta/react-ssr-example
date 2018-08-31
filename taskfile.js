@@ -27,12 +27,12 @@ export async function copy (task) {
 }
 
 // Do build server-side.
-export async function buildServer (task) {
+export async function babel (task) {
   await task.source(src.server)
     .babel()
     .target(dist.d)
 }
 
 export default async function (task) {
-  await task.serial(['clear', 'copy', 'buildServer'])
+  await task.serial(['clear', 'copy', 'babel'])
 }
