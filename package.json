@@ -4,9 +4,16 @@
   "description": "Server-side-rendered react with GraphQL example.",
   "main": "index.js",
   "scripts": {
-    "front": "poi",
-    "serve": "NODE_PATH=src node src/server/index.js",
-    "servep": "NODE_ENV=production NODE_PATH=dist node dist/server/index.js",
+    "serve": "npm run copy && node src/server/index.js",
+    "servep": "NODE_ENV=production node dist/server/index.js",
+    "copy": "copyfiles -u 1 \"src/front/**/*\" -e \"**/*.js\"  public",
+    "build": "npm run copy && NODE_ENV=production webpack --silent",
+    "analyze": "ANALYZE=true webpack --profile --json > stats.json",
+    "show-stats": "webpack-bundle-analyzer stats.json",
+    "stats": "npm run analyze && npm run show-stats",
+    "browsers": "npx browserslist",
+    "lint": "standard",
+    "fix": "standard --fix",
     "babel": "rm -rf dist && babel src --out-dir dist"
   },
   "repository": {
@@ -18,31 +25,52 @@
   "bugs": {
     "url": "https://github.com/subuta/react-ssr-gql-example/issues"
   },
+  "browserslist": [
+    "last 1 version",
+    "> 1%"
+  ],
   "homepage": "https://github.com/subuta/react-ssr-gql-example#readme",
   "dependencies": {
-    "poi": "^10.2.9",
-    "isomorphic-unfetch": "^2.0.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "recompose": "^0.27.1",
+    "@babel/polyfill": "^7.0.0",
     "dotenv": "^6.0.0",
     "esm": "^3.0.72",
+    "express-to-koa": "^1.0.6",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-hot-loader": "^4.3.5",
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@taskr/babel": "^1.1.0-next.1",
+    "@taskr/clear": "^1.1.0",
+    "@taskr/esnext": "^1.1.0",
+    "babel-loader": "^8.0.0",
+    "clean-webpack-plugin": "^0.1.19",
     "clear-module": "^3.0.0",
-    "envify": "^4.1.0",
+    "core-js": "^2.5.7",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "hard-source-webpack-plugin": "^0.12.0",
     "react-hot-loader": "^4.3.3",
     "sane": "^3.0.0",
-    "standard": "^11.0.1"
+    "standard": "^12.0.1",
+    "taskr": "^1.1.0",
+    "webpack": "^4.17.1",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-chain": "^4.9.0",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware": "^3.2.0",
+    "webpack-hot-middleware": "^2.22.3",
+    "webpackbar": "^2.6.3"
   }
 }

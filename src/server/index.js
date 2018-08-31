@@ -1,11 +1,11 @@
-'use strict'
+'use strict'; // load env
 
-// load env
-require('dotenv')
+require('dotenv').config();
 
 if (process.env.NODE_ENV !== 'production') {
-  require('esm')
-  require('@babel/register')
+  require('esm');
+
+  require('@babel/register');
 }
 
-require('./main')
+require('./main');

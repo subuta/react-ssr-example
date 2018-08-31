@@ -1,34 +1,49 @@
+import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server';
-import TwitterCard from 'src/common/components/TwitterCard'
+import App from './App'
 
-const render = async (Component) => {
-  const getInitialProps = Component.getInitialProps || (() => Promise.resolve({}))
+const hoge = 'hoge'
 
-  // await for resolving initialProps promsie.
-  const initialProps = await getInitialProps();
+const obj = {
+  hoge,
+  fuga: 1
+}
 
-  return {
-    initialProps,
-    // Then render component to string with initialProps
-    html: ReactDOMServer.renderToString(<Component {...initialProps} />)
-  }
+const obj2 = { ...obj }
+
+const { fuga, ...rest } = obj2
+
+const waait = new Promise((resolve) => {
+  setTimeout(resolve, 1000)
+})
+
+const render = (state) => {
+  ReactDOM.render(<App state={state} />, document.getElementById('app'))
 }
 
 const main = async () => {
-  const body = document.querySelector('body')
+  render('started!')
 
-  const {
-    html,
-    initialProps
-  } = await render(TwitterCard)
+  await waait
 
-  body.innerHTML = `<div id="app">${html}</div>`
+  render('awaited')
 
-  const node = document.querySelector('#app')
+  console.log('env = ', process.env.NODE_ENV)
+  console.log(fuga)
+  console.log(rest)
 
-  ReactDOM.hydrate(<TwitterCard {...initialProps} />, node)
+  render('ended')
 }
 
-main()
+// Native
+// Check if the DOMContentLoaded has already been completed
+if (document.readyState !== 'loading') {
+  main()
+} else {
+  document.addEventListener('DOMContentLoaded', main)
+}
+
+if (module.hot) {
+  module.hot.accept()
+}
