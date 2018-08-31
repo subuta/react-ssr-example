@@ -3,6 +3,7 @@ import logger from 'koa-logger'
 import koaBody from 'koa-body'
 import serve from 'koa-static'
 import clearModule from 'clear-module'
+import Loadable from 'react-loadable'
 import path from 'path'
 
 import {
@@ -68,9 +69,11 @@ if (dev) {
 }
 
 // otherwise PUBLIC_DIR
-app.use(serve(PUBLIC_DIR));
+app.use(serve(PUBLIC_DIR))
 
-// Serve the files on port.
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`)
+Loadable.preloadAll().then(() => {
+  // Serve the files on port.
+  app.listen(port, function () {
+    console.log(`Example app listening on port ${port}!`)
+  })
 })

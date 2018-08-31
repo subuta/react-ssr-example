@@ -1,7 +1,10 @@
 import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import waait from 'waait'
+import ReactDOMServer from 'react-dom/server';
 import App from './App'
+import Loadable from 'react-loadable';
 
 const hoge = 'hoge'
 
@@ -14,18 +17,18 @@ const obj2 = { ...obj }
 
 const { fuga, ...rest } = obj2
 
-const waait = new Promise((resolve) => {
-  setTimeout(resolve, 1000)
-})
+Loadable.preloadReady().then(() => {
+  ReactDOM.hydrate(<App />, document.getElementById('app'));
+});
 
 const render = (state) => {
-  ReactDOM.render(<App state={state} />, document.getElementById('app'))
+  ReactDOM.hydrate(<App state={state} />, document.getElementById('app'))
 }
 
 const main = async () => {
-  render('started!')
+  render('started!', true)
 
-  await waait
+  await waait(1000)
 
   render('awaited')
 

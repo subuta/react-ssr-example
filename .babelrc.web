@@ -11,6 +11,8 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import",
+    "react-loadable/babel",
     "react-hot-loader/babel"
   ]
 }
