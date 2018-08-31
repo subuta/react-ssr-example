@@ -4,7 +4,6 @@ import koaBody from 'koa-body'
 import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
-import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
 
 import {
   ROOT_DIR,
@@ -25,15 +24,14 @@ app.use(logger())
 // parse body
 app.use(koaBody())
 
-// otherwise PUBLIC_DIR
-app.use(serve(PUBLIC_DIR));
-
 // detect is dev
 const dev = process.env.NODE_ENV !== 'production'
 
 if (dev) {
   const webpack = require('webpack')
   const config = require(WEBPACK_CONFIG_PATH)
+  const { devMiddleware } = require('koa-webpack-middleware')
+  const hotMiddleware = require('./middlewares/webpack-hot-middleware').default
   const compiler = webpack(config)
 
   app.use(devMiddleware(compiler, {
@@ -68,6 +66,9 @@ if (dev) {
   app.use(pages.routes())
   app.use(pages.allowedMethods())
 }
+
+// otherwise PUBLIC_DIR
+app.use(serve(PUBLIC_DIR));
 
 // Serve the files on port.
 app.listen(port, function () {

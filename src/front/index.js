@@ -45,5 +45,6 @@ if (document.readyState !== 'loading') {
 }
 
 if (module.hot) {
+  console.clear()
   module.hot.accept()
 }

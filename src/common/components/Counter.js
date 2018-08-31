@@ -15,7 +15,7 @@ const enhance = compose(
   })
 )
 
-let TwitterCard = enhance((props) => {
+let Counter = enhance((props) => {
   const {
     counter,
     onClick,
@@ -29,9 +29,8 @@ let TwitterCard = enhance((props) => {
 })
 
 // Define next.js style getInitialProps for pre-render.
-TwitterCard.getInitialProps = async () => {
-  const uri = 'https://twitter.com/Interior/status/463440424141459456'
-
+Counter.getInitialProps = async () => {
+  // const uri = 'https://twitter.com/Interior/status/463440424141459456'
   // const data = await fetch(`http://localhost:8061/iframely?uri=${uri}`).then((res) => {
   //   return res.json()
   // })
@@ -40,4 +39,4 @@ TwitterCard.getInitialProps = async () => {
   }
 }
 
-export default TwitterCard
+export default Counter

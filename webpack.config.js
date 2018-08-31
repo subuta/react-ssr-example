@@ -41,6 +41,10 @@ config
   .publicPath('/')
   .filename('[name].bundle.js')
 
+config.resolve.modules
+  .add('node_modules')
+  .add(SRC_DIR)
+
 // Load and use `.babelrc.web`
 const babelrc = JSON.parse(fs.readFileSync(path.resolve(ROOT_DIR, '.babelrc.web')))
 

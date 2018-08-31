@@ -1,30 +1,20 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
+
+import Counter from 'common/components/Counter'
+
 import {
-  compose,
-  withState,
-  withHandlers
+  compose
 } from 'recompose'
 
 const enhance = compose(
-  hot(module),
-  withState('counter', 'setCounter', 0),
-  withHandlers({
-    increment: ({ counter, setCounter }) => () => {
-      setCounter(counter + 1)
-    }
-  })
+  hot(module)
 )
 
-export default enhance(({ state, increment, counter }) => {
+export default enhance(() => {
   return (
     <div>
-      <b>{state}</b>
-
-      <div style={{ marginTop: 8 }}>
-        <b style={{ marginRight: 8 }}>{counter}</b>
-        <button onClick={increment}>+</button>
-      </div>
+      <Counter></Counter>
     </div>
   )
 })

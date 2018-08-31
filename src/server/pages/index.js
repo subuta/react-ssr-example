@@ -6,12 +6,14 @@ import fs from 'fs'
 
 import {
   ROOT_DIR
-} from '../config'
+} from '../../../config'
 
 const router = new Router()
 
 router.get('/hoge', async (ctx) => {
-  ctx.body = 'hoge'
+  ctx.body = {
+    hoge: 'fuga'
+  }
 })
 
 export default router
