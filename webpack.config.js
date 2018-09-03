@@ -66,10 +66,11 @@ config.devServer
   .quiet(true)
 
 // FIXME: Cannot use with react-loadable?
+// SEE: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
 // Enable better caching for webpack compilation.
-// config
-//   .plugin('hard-source')
-//   .use(HardSourceWebpackPlugin)
+config
+  .plugin('hard-source')
+  .use(HardSourceWebpackPlugin)
 
 // Show progress-bar while compile.
 config
