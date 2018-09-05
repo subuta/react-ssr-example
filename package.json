@@ -32,6 +32,7 @@
   "homepage": "https://github.com/subuta/react-ssr-gql-example#readme",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "common-tags": "^1.8.0",
     "dotenv": "^6.0.0",
     "esm": "^3.0.72",
     "koa": "^2.5.2",
@@ -41,10 +42,11 @@
     "koa-static": "^5.0.0",
     "koa-webpack-middleware": "^1.0.7",
     "lodash": "^4.17.10",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "~16.3.0",
+    "react-dom": "~16.3.0",
     "react-loadable": "^5.5.0",
     "recompose": "^0.30.0",
+    "resolve": "^1.8.1",
     "waait": "^1.0.2"
   },
   "devDependencies": {
@@ -58,6 +60,7 @@
     "@taskr/clear": "^1.1.0",
     "@taskr/esnext": "^1.1.0",
     "babel-loader": "^8.0.0",
+    "babel-plugin-module-resolver": "^3.1.1",
     "clean-webpack-plugin": "^0.1.19",
     "clear-module": "^3.0.0",
     "core-js": "^2.5.7",

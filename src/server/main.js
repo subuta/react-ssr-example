@@ -46,26 +46,26 @@ if (dev) {
   }))
 
   // Server side hot-module-replacement :)
-  const watcher = require('sane')(path.resolve(ROOT_DIR, './src/server'))
+  const watcher = require('sane')(path.resolve(ROOT_DIR, './src'))
   watcher.on('ready', () => {
     watcher.on('all', () => {
-      console.log('Clearing src/server module cache from server')
-      clearModule.match(/src\/server/)
+      console.log('Clearing src module cache from server')
+      clearModule.match(/src/)
     })
   })
 }
 
-// Register pages routes/allowedMethods
+// Register views routes/allowedMethods
 if (dev) {
   // Dynamic import modules for development(With no-module-cache).
   // SEE: https://github.com/glenjamin/ultimate-hot-reloading-example/blob/master/server.js
-  app.use((...args) => require('./pages').default.routes().apply(null, args))
-  app.use((...args) => require('./pages').default.allowedMethods().apply(null, args))
+  app.use((...args) => require('./views').default.routes().apply(null, args))
+  app.use((...args) => require('./views').default.allowedMethods().apply(null, args))
 } else {
   // Use modules statically otherwise (prod/test).
-  const pages = require('./pages').default
-  app.use(pages.routes())
-  app.use(pages.allowedMethods())
+  const views = require('./views').default
+  app.use(views.routes())
+  app.use(views.allowedMethods())
 }
 
 // otherwise PUBLIC_DIR
