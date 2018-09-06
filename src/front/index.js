@@ -3,10 +3,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'common/layout/App'
 import { loadComponents } from 'loadable-components'
-import getPath from 'common/utils/getPath'
+import createPages from 'common/layout/Pages'
+
+const Pages = createPages()
+
+const app = (
+  <App>
+    <Pages />
+  </App>
+)
 
 const render = () => {
-  ReactDOM.hydrate(<App path={getPath()} />, document.getElementById('app'))
+  ReactDOM.hydrate(app, document.getElementById('app'))
 }
 
 const main = async () => {

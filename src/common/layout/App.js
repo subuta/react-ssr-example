@@ -1,8 +1,5 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import getPath from 'common/utils/getPath'
-
-import Pages from './pages'
 
 import {
   compose
@@ -12,10 +9,10 @@ const enhance = compose(
   hot(module)
 )
 
-export default enhance(({ ctx }) => {
+export default enhance(({ children }) => {
   return (
     <div>
-      <Pages path={getPath(ctx)} />
+      {children}
     </div>
   )
 })

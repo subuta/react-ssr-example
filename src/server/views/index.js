@@ -5,14 +5,17 @@ import { getLoadableState } from 'loadable-components/server'
 
 import createDocument from './_document'
 import App from 'common/layout/App'
+import createPages from 'common/layout/Pages'
 
 const router = new Router()
 
-router.get('/bar', async (ctx) => {
-  let modules = []
+router.get('*', async (ctx) => {
+  const Pages = createPages(ctx)
 
   const app = (
-    <App ctx={ctx} />
+    <App>
+      <Pages />
+    </App>
   )
 
   const loadableState = await getLoadableState(app)
