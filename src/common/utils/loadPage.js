@@ -12,21 +12,25 @@ const LoadingComponent = () => {
 }
 
 const ErrorComponent = (props) => {
-  const errorMessage = _.get(props.error, 'message', '')
-  if (errorMessage.match(/Cannot find module '.*\.js'/)) {
-    console.error(`[404]`, errorMessage)
-    return <NotFound />
-  }
-
   console.log('props.error = ', props.error)
   return <div>Error!</div>
-  // return <div>Error! <button onClick={props.retry}>Retry</button></div>
+}
+
+const onImportError = (err) => {
+  if (err.message.match(/Cannot find module '.*\.js'/)) {
+    console.error('[404]', err)
+    return NotFound
+  }
+
+  console.error('Unknown error', err)
+  // Render null component otherwise.
+  return () => null
 }
 
 export default (ctx) => {
   const path = getPath(ctx)
   return loadable(
-    () => import(`../pages${path}.js`),
+    () => import(`../pages${path}.js`).catch(onImportError),
     { ErrorComponent, LoadingComponent }
   )
 }

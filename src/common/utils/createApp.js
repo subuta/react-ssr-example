@@ -1,14 +1,13 @@
 import React from 'react'
 
 import App from 'common/layout/App'
-import createPages from './createPages'
+import loadPage from './loadPage'
 
 export default (ctx) => {
-  const Pages = createPages(ctx)
-
+  const Page = loadPage(ctx)
   return (
     <App>
-      <Pages />
+      <Page />
     </App>
   )
 }

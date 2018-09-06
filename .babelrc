@@ -12,7 +12,10 @@
   ],
   "plugins": [
     ["babel-plugin-module-resolver", {
-      "root": ["./src"]
+      "root": ["./src"],
+      "alias": {
+        "common": "./src/common"
+      }
     }],
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",

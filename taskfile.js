@@ -3,6 +3,8 @@ import {
   DIST_DIR
 } from './config'
 
+import path from 'path'
+
 const src = {
   pages: 'pages/**/*',
   server: 'src/**/!(front)/*.js',
@@ -26,13 +28,40 @@ export async function copy (task) {
   await task.source(src.copy).target(dist.p)
 }
 
+// Do build front-end(for Production).
+export async function buildFront (task) {
+  await task.source('src').shell('NODE_ENV=production webpack --silent');
+}
+
+// Do analyze front-end(with webpack-bundle-analyzer).
+export async function analyze (task) {
+  await task.source('src').shell('ANALYZE=true webpack --profile --json > stats.json');
+}
+
+// Show stats of analyze.
+export async function showStats (task) {
+  await task.source('src').shell('webpack-bundle-analyzer stats.json');
+}
+
 // Do build server-side.
 export async function babel (task) {
   await task.source(src.server)
-    .babel()
+    .babel({
+      "extends": "./.babelrc",
+      "plugins": [
+        ["babel-plugin-module-resolver", {
+          "root": ["./dist"]
+        }]
+      ]
+    })
     .target(dist.d)
 }
 
+// Do build back/front-end.
+export async function build (task) {
+  await task.serial(['clear', 'copy', 'babel', 'buildFront'])
+}
+
 export default async function (task) {
-  await task.serial(['clear', 'copy', 'babel'])
+  await task.serial(['build'])
 }

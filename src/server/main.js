@@ -54,6 +54,9 @@ if (dev) {
   })
 }
 
+// try PUBLIC_DIR first
+app.use(serve(PUBLIC_DIR))
+
 // Register views routes/allowedMethods
 if (dev) {
   // Dynamic import modules for development(With no-module-cache).
@@ -66,9 +69,6 @@ if (dev) {
   app.use(views.routes())
   app.use(views.allowedMethods())
 }
-
-// otherwise PUBLIC_DIR
-app.use(serve(PUBLIC_DIR))
 
 // Serve the files on port.
 app.listen(port, function () {
