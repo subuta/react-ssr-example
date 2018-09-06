@@ -1,23 +1,23 @@
 import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from '../common/layout/App'
-import Loadable from 'react-loadable'
-import getPath from '../common/utils/getPath'
+import App from 'common/layout/App'
+import { loadComponents } from 'loadable-components'
+import getPath from 'common/utils/getPath'
 
 const render = () => {
   ReactDOM.hydrate(<App path={getPath()} />, document.getElementById('app'))
 }
 
-Loadable.preloadReady().then(() => render())
-
 const main = async () => {
+  await loadComponents()
   render()
 }
 
 // Native
 // Check if the DOMContentLoaded has already been completed
 if (document.readyState !== 'loading') {
+  main()
 } else {
   document.addEventListener('DOMContentLoaded', main)
 }

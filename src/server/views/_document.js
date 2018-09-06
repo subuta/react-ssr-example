@@ -1,8 +1,7 @@
 import React from 'react'
 import { source } from 'common-tags'
 
-export default ({ bundles, html }) => {
-  console.log('bundles = ', bundles)
+export default ({ scripts, html }) => {
   return source`
     <!doctype html>
       <html lang="en">
@@ -17,13 +16,7 @@ export default ({ bundles, html }) => {
               <div id="app">${html}</div>
           </div>
           
-          ${bundles.map(bundle => {
-            return `<script src="${bundle.publicPath}"></script>`
-            // alternatively if you are using publicPath option in webpack config
-            // you can use the publicPath value from bundle, e.g:
-            // return \`<script src="${bundle.publicPath}"></script>\`
-          }).join('\\n')
-          }
+          ${scripts}
           <script src="/main.bundle.js"></script>
         </body>
       </html>

@@ -3,7 +3,6 @@ import logger from 'koa-logger'
 import koaBody from 'koa-body'
 import serve from 'koa-static'
 import clearModule from 'clear-module'
-import Loadable from 'react-loadable'
 import path from 'path'
 
 import {
@@ -37,12 +36,12 @@ if (dev) {
 
   app.use(devMiddleware(compiler, {
     noInfo: true,
-    logLevel: 'silent',
+    // logLevel: 'silent',
     publicPath: config.output.publicPath
   }))
 
   app.use(hotMiddleware(compiler, {
-    log: false
+    // log: false
   }))
 
   // Server side hot-module-replacement :)
@@ -71,9 +70,7 @@ if (dev) {
 // otherwise PUBLIC_DIR
 app.use(serve(PUBLIC_DIR))
 
-Loadable.preloadAll().then(() => {
-  // Serve the files on port.
-  app.listen(port, function () {
-    console.log(`Example app listening on port ${port}!`)
-  })
+// Serve the files on port.
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}!`)
 })

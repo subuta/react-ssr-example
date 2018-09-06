@@ -10,13 +10,11 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const { ReactLoadablePlugin } = require('react-loadable/webpack')
 
 const {
   ROOT_DIR,
   FRONT_DIR,
   SRC_DIR,
-  TMP_DIR,
   PUBLIC_DIR
 } = require('./config.js')
 
@@ -43,6 +41,7 @@ config
   .publicPath('/')
   .filename('[name].bundle.js')
 
+// Add modules dir
 config.resolve.modules
   .add('node_modules')
   .add(SRC_DIR)
@@ -65,7 +64,6 @@ config.devServer
   .contentBase(PUBLIC_DIR)
   .quiet(true)
 
-// FIXME: Cannot use with react-loadable?
 // SEE: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
 // Enable better caching for webpack compilation.
 config
@@ -87,13 +85,6 @@ config
   .use(CleanWebpackPlugin, [['public/**/*.js'], {
     exclude: ['index.html'],
     beforeEmit: true
-  }])
-
-// For react-loadable.
-config
-  .plugin('react-loadable')
-  .use(ReactLoadablePlugin, [{
-    filename: path.resolve(TMP_DIR, './react-loadable.json')
   }])
 
 // Set webpack optimization option.

@@ -1,6 +1,6 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import getPath from '../utils/getPath'
+import getPath from 'common/utils/getPath'
 
 import Pages from './pages'
 
@@ -13,7 +13,6 @@ const enhance = compose(
 )
 
 export default enhance(({ ctx }) => {
-  console.log(`getPath(ctx) = `, getPath(ctx))
   return (
     <div>
       <Pages path={getPath(ctx)} />
