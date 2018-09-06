@@ -4,19 +4,12 @@ import ReactDOMServer from 'react-dom/server'
 import { getLoadableState } from 'loadable-components/server'
 
 import createDocument from './_document'
-import App from 'common/layout/App'
-import createPages from 'common/layout/Pages'
+import createApp from 'common/utils/createApp'
 
 const router = new Router()
 
 router.get('*', async (ctx) => {
-  const Pages = createPages(ctx)
-
-  const app = (
-    <App>
-      <Pages />
-    </App>
-  )
+  const app = createApp(ctx)
 
   const loadableState = await getLoadableState(app)
 

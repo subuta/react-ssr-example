@@ -1,17 +1,10 @@
 import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from 'common/layout/App'
 import { loadComponents } from 'loadable-components'
-import createPages from 'common/layout/Pages'
+import createApp from 'common/utils/createApp'
 
-const Pages = createPages()
-
-const app = (
-  <App>
-    <Pages />
-  </App>
-)
+const app = createApp()
 
 const render = () => {
   ReactDOM.hydrate(app, document.getElementById('app'))
