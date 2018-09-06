@@ -3,8 +3,6 @@ import {
   DIST_DIR
 } from './config'
 
-import path from 'path'
-
 const src = {
   pages: 'pages/**/*',
   server: 'src/**/!(front)/*.js',
@@ -30,27 +28,27 @@ export async function copy (task) {
 
 // Do build front-end(for Production).
 export async function buildFront (task) {
-  await task.source('src').shell('NODE_ENV=production webpack --silent');
+  await task.source('src').shell('NODE_ENV=production webpack --silent')
 }
 
 // Do analyze front-end(with webpack-bundle-analyzer).
 export async function analyze (task) {
-  await task.source('src').shell('ANALYZE=true webpack --profile --json > stats.json');
+  await task.source('src').shell('ANALYZE=true webpack --profile --json > stats.json')
 }
 
 // Show stats of analyze.
 export async function showStats (task) {
-  await task.source('src').shell('webpack-bundle-analyzer stats.json');
+  await task.source('src').shell('webpack-bundle-analyzer stats.json')
 }
 
 // Do build server-side.
 export async function babel (task) {
   await task.source(src.server)
     .babel({
-      "extends": "./.babelrc",
-      "plugins": [
-        ["babel-plugin-module-resolver", {
-          "root": ["./dist"]
+      'extends': './.babelrc',
+      'plugins': [
+        ['babel-plugin-module-resolver', {
+          'root': ['./dist']
         }]
       ]
     })

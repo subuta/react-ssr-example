@@ -1,7 +1,19 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
-export default () => {
+import Counter from 'common/components/Counter'
+
+const foo = () => {
   return (
-    <h1>foo</h1>
+    <>
+      <Helmet>
+        <title>Foo | React SSR Example</title>
+      </Helmet>
+
+      <h1>foo</h1>
+      <Counter />
+    </>
   )
 }
+
+export default foo

@@ -1,5 +1,4 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
 
 import {
   compose,
@@ -8,35 +7,30 @@ import {
 } from 'recompose'
 
 const enhance = compose(
-  hot(module),
   withState('counter', 'setCounter', 0),
   withHandlers({
-    onClick: ({counter, setCounter}) => (e) => setCounter(counter + 1)
+    increment: ({ counter, setCounter }) => () => {
+      setCounter(counter + 1)
+    },
+
+    decrement: ({ counter, setCounter }) => () => {
+      setCounter(counter - 1)
+    }
   })
 )
 
-let Counter = enhance((props) => {
+export default enhance((props) => {
   const {
     counter,
-    onClick,
+    decrement,
+    increment
   } = props
 
   return (
-    <div>
-      <h1 onClick={onClick}>{counter} times</h1>
+    <div style={{ margin: '8px 0' }}>
+      <button onClick={decrement}>-</button>
+      <b style={{ margin: '0 8px' }}>{counter}</b>
+      <button onClick={increment}>+</button>
     </div>
-)
+  )
 })
-
-// Define next.js style getInitialProps for pre-render.
-Counter.getInitialProps = async () => {
-  // const uri = 'https://twitter.com/Interior/status/463440424141459456'
-  // const data = await fetch(`http://localhost:8061/iframely?uri=${uri}`).then((res) => {
-  //   return res.json()
-  // })
-
-  return {
-  }
-}
-
-export default Counter

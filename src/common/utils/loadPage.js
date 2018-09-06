@@ -1,9 +1,16 @@
 import React from 'react'
 import loadable from 'loadable-components'
-import _ from 'lodash'
-import getPath from 'common/utils/getPath'
 
 import NotFound from 'common/pages/404'
+
+import getPath from 'common/utils/getPath'
+import isBrowser from 'common/utils/isBrowser'
+import log from 'common/utils/log'
+import {
+  getInitialPropsFromComponent,
+  getInitialProps,
+  rememberInitialProps
+} from 'common/utils/initialProps'
 
 const LoadingComponent = () => {
   return (
@@ -18,7 +25,7 @@ const ErrorComponent = (props) => {
 
 const onImportError = (err) => {
   if (err.message.match(/Cannot find module '.*\.js'/)) {
-    console.error('[404]', err)
+    log('[404]', err)
     return NotFound
   }
 
@@ -27,10 +34,28 @@ const onImportError = (err) => {
   return () => null
 }
 
-export default (ctx) => {
+export default (ctx = {}) => {
   const path = getPath(ctx)
   return loadable(
-    () => import(`../pages${path}.js`).catch(onImportError),
+    async () => {
+      let Page = await import(`../pages${path}.js`).catch(onImportError)
+
+      // Handle default export.
+      Page = Page.default ? Page.default : Page
+
+      // Get initialProps from ctx(or window.)
+      let initialProps = getInitialProps(ctx)
+
+      // Get initialProps from Component if SSR.
+      if (!isBrowser) {
+        initialProps = await getInitialPropsFromComponent(Page)
+      }
+
+      // Set initialProps reference to ctx.
+      rememberInitialProps(ctx, initialProps)
+
+      return props => <Page {...initialProps} {...props} />
+    },
     { ErrorComponent, LoadingComponent }
   )
 }

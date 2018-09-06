@@ -15,7 +15,7 @@ const {
   PORT
 } = process.env
 
-const port = parseInt(PORT, 10) || 5000
+const port = parseInt(PORT, 10) || 3000
 const app = new Koa()
 
 // log requests

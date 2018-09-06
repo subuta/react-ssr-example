@@ -1,6 +1,18 @@
 # React SSR Example
 Server-Side rendered react example :)
 
+### Feature
+
+- HMR(+ Server-Side routes hot reloading) Included :heart:
+  - with [koa](https://github.com/koajs/koa)
+  - based on [ultimate-hot-reloading-example](https://github.com/glenjamin/ultimate-hot-reloading-example)
+- Do SEO (google) and SMO (twitter, facebook...) for React app.
+  - with [react-helmet](https://github.com/nfl/react-helmet)
+- Event Handlers are works as expected (SSR + Hydrate)
+  - with [loadable-components](https://github.com/smooth-code/loadable-components)
+- No complex routing logic needed anymore! (Will just render page in the `/pages`)
+- [next.js](https://github.com/zeit/next.js/) inspired `getInitialProps` lifecycle.
+
 ### How to develop
 
 ```
