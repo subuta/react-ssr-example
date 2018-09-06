@@ -7,11 +7,11 @@ export default ({ scripts, html }) => {
       <html lang="en">
         <head>
           <meta charset="utf-8">
-          <title>React SSR and GraphQL Example</title>
+          <title>React SSR Example</title>
         </head>
         <body>
           <div class="container">
-              <h3>React SSR and GraphQL Example</h3>
+              <h3>React SSR Example</h3>
           
               <div id="app">${html}</div>
           </div>

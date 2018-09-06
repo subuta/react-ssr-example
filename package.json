@@ -1,7 +1,7 @@
 {
-  "name": "react-ssr-gql-example",
+  "name": "react-ssr-example",
   "version": "1.0.0",
-  "description": "Server-side-rendered react with GraphQL example.",
+  "description": "Server-side-rendered react example.",
   "main": "index.js",
   "scripts": {
     "copy": "taskr clear copy",
@@ -18,18 +18,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/subuta/react-ssr-gql-example.git"
+    "url": "git+https://github.com/subuta/react-ssr-example.git"
   },
   "author": "subuta <shunta.3110@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/subuta/react-ssr-gql-example/issues"
+    "url": "https://github.com/subuta/react-ssr-example/issues"
   },
   "browserslist": [
     "last 1 version",
     "> 1%"
   ],
-  "homepage": "https://github.com/subuta/react-ssr-gql-example#readme",
+  "homepage": "https://github.com/subuta/react-ssr-example#readme",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "babel-plugin-dynamic-import-node": "^2.1.0",
