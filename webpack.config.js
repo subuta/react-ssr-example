@@ -114,10 +114,6 @@ config
     devConfig
       .plugin('hot-module-replacement')
       .use(webpack.HotModuleReplacementPlugin)
-
-    devConfig
-      .plugin('named-modules')
-      .use(webpack.NamedModulesPlugin)
   })
 
 // Analyze-only setting
