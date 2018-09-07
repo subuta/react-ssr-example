@@ -23,8 +23,11 @@ export default async (app, ctx) => {
     <html ${helmet.htmlAttributes.toString()}>
         <head>
             ${helmet.title.toString()}
+            ${helmet.base.toString()}
             ${helmet.meta.toString()}
             ${helmet.link.toString()}
+            ${helmet.style.toString()}
+            ${helmet.script.toString()}
         </head>
         <body ${helmet.bodyAttributes.toString()}>
           <div class="container">
