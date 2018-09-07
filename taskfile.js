@@ -41,6 +41,11 @@ export async function showStats (task) {
   await task.source('src').shell('webpack-bundle-analyzer stats.json')
 }
 
+// Show stats
+export async function stats (task) {
+  await task.serial(['analyze', 'showStats'])
+}
+
 // Do build server-side.
 export async function babel (task) {
   await task.source(src.server)

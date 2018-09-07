@@ -7,8 +7,7 @@ import path from 'path'
 
 import {
   ROOT_DIR,
-  PUBLIC_DIR,
-  WEBPACK_CONFIG_PATH
+  PUBLIC_DIR
 } from '../../config'
 
 const {
@@ -28,22 +27,6 @@ app.use(koaBody())
 const dev = process.env.NODE_ENV !== 'production'
 
 if (dev) {
-  const webpack = require('webpack')
-  const config = require(WEBPACK_CONFIG_PATH)
-  const { devMiddleware } = require('koa-webpack-middleware')
-  const hotMiddleware = require('./middlewares/webpack-hot-middleware').default
-  const compiler = webpack(config)
-
-  app.use(devMiddleware(compiler, {
-    noInfo: true,
-    // logLevel: 'silent',
-    publicPath: config.output.publicPath
-  }))
-
-  app.use(hotMiddleware(compiler, {
-    // log: false
-  }))
-
   // Server side hot-module-replacement :)
   const watcher = require('sane')(path.resolve(ROOT_DIR, './src'))
   watcher.on('ready', () => {

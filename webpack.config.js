@@ -8,6 +8,7 @@ const webpack = require('webpack')
 const WebpackBar = require('webpackbar')
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -61,14 +62,23 @@ config.module
   .options(babelrc)
 
 config.devServer
+  .hot(true)
+  // .quiet(true)
+  .noInfo(true)
   .contentBase(PUBLIC_DIR)
-  .quiet(true)
+  .proxy({
+    '/': 'http://localhost:3000'
+  })
 
 // SEE: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
 // Enable better caching for webpack compilation.
 config
   .plugin('hard-source')
   .use(HardSourceWebpackPlugin)
+
+config
+  .plugin('error-overlay')
+  .use(ErrorOverlayPlugin)
 
 // Show progress-bar while compile.
 config
@@ -100,10 +110,6 @@ config
         // Whether clear console after compile or not.
         clearConsole: !isAnalyze
       }])
-
-    // Append webpack-hot-middleware/client.js to main.
-    devConfig.entry('main')
-      .add('webpack-hot-middleware/client')
 
     devConfig
       .plugin('hot-module-replacement')
