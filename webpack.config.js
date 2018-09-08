@@ -59,12 +59,15 @@ config.module
   .end()
   .use('babel')
   .loader('babel-loader')
-  .options(babelrc)
+  .options({
+    babelrc: false,
+    ...babelrc
+  })
 
 config.devServer
   .hot(true)
   // .quiet(true)
-  .noInfo(true)
+  // .noInfo(true)
   .contentBase(PUBLIC_DIR)
   .proxy({
     '/': 'http://localhost:3000'

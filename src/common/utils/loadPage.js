@@ -37,25 +37,26 @@ const onImportError = (err) => {
 export default (ctx = {}) => {
   const path = getPath(ctx)
   return loadable(
-    async () => {
-      let Page = await import(`../pages${path}.js`).catch(onImportError)
-
-      // Handle default export.
-      Page = Page.default ? Page.default : Page
-
-      // Get initialProps from ctx(or window.)
-      let initialProps = getInitialProps(ctx)
-
-      // Get initialProps from Component if SSR.
-      if (!isBrowser) {
-        initialProps = await getInitialPropsFromComponent(Page)
-      }
-
-      // Set initialProps reference to ctx.
-      rememberInitialProps(ctx, initialProps)
-
-      return props => <Page {...initialProps} {...props} />
-    },
+    // async () => {
+    //   let Page = await import(`../pages${path}.js`).catch(onImportError)
+    //
+    //   // Handle default export.
+    //   Page = Page.default ? Page.default : Page
+    //
+    //   // Get initialProps from ctx(or window.)
+    //   let initialProps = getInitialProps(ctx)
+    //
+    //   // Get initialProps from Component if SSR.
+    //   if (!isBrowser) {
+    //     initialProps = await getInitialPropsFromComponent(Page)
+    //   }
+    //
+    //   // Set initialProps reference to ctx.
+    //   rememberInitialProps(ctx, initialProps)
+    //
+    //   return props => <Page {...initialProps} {...props} />
+    // },
+    async () => import(`../pages${path}.js`).catch(onImportError),
     { ErrorComponent, LoadingComponent }
   )
 }
