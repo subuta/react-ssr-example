@@ -39,9 +39,6 @@ const onImportError = (err) => {
   return () => null
 }
 
-// Will invalidate after render.
-let isInitialRender = true
-
 // Generate Routes for pages with code-splitting(via loadable-components).
 const Routes = _.transform(getPages(), (result, page) => {
   result[page] = loadable(async () => {
@@ -51,29 +48,17 @@ const Routes = _.transform(getPages(), (result, page) => {
     // Handle default export.
     Page = Page.default ? Page.default : Page
 
+    // Get initialProps from ctx(or window.)
     let initialProps = getInitialProps()
 
     // Get initialProps.
     if (!isBrowser) {
       initialProps = await getInitialPropsFromComponent(Page)
-    } else if (!isInitialRender) {
-      initialProps = await getInitialPropsFromComponent(Page)
-      rememberInitialProps(initialProps)
     }
 
     return ({ ctx, ...rest }) => {
-      isInitialRender = false
-
-      // FIXME: We may have more better way than this.
-      // TODO: Deal with How to access ctx outside of render.
-      if (ctx) {
-        // Set initialProps reference to ctx.
-        rememberInitialProps(initialProps, ctx)
-      }
-
-      // Get initialProps from ctx(or window.)
-      initialProps = getInitialProps(ctx)
-
+      // Set initialProps reference to ctx.
+      if (ctx) rememberInitialProps(initialProps, ctx)
       // Then render page with resolved initialProps.
       return <Page {...initialProps} {...rest} />
     }
