@@ -1,15 +1,21 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import loadable from 'loadable-components'
+import _ from 'lodash'
+
 import {
   getPages
 } from 'common/utils/fetchPages'
-import _ from 'lodash'
 
+import {
+  getInitialProps,
+  getInitialPropsFromComponent,
+  rememberInitialProps
+} from 'common/utils/initialProps'
+
+import isBrowser from 'common/utils/isBrowser'
+import log from 'common/utils/log'
 import Page404 from './404'
-import { getInitialProps, getInitialPropsFromComponent, rememberInitialProps } from '../utils/initialProps'
-import isBrowser from '../utils/isBrowser'
-import log from '../utils/log'
 
 const LoadingComponent = () => {
   return (
