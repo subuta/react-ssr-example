@@ -12,7 +12,9 @@ export const getInitialPropsFromComponent = async (Component) => {
 }
 
 // Keep initialProps reference to ctx.
-export const rememberInitialProps = (ctx, initialProps) => {
+export const rememberInitialProps = (initialProps, ctx) => {
+  // Set initialProps to window if browser
+  if (isBrowser) return _.set(window, [KEY], initialProps)
   _.set(ctx, 'res.locals', { initialProps })
 }
 

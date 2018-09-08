@@ -33,37 +33,44 @@ const onImportError = (err) => {
   return () => null
 }
 
+// Will invalidate after render.
+let isInitialRender = true
+
 // Generate Routes for pages with code-splitting(via loadable-components).
 const Routes = _.transform(getPages(), (result, page) => {
   result[page] = loadable(async () => {
-    return import(`.${page}`).catch(onImportError)
-    // let Page = await import(`.${page}`).catch(onImportError)
-    //
-    // // Handle default export.
-    // Page = Page.default ? Page.default : Page
-    //
-    // let initialProps = {}
-    //
-    // // Get initialProps from Component if SSR.
-    // if (!isBrowser) {
-    //   console.log('here!')
-    //   initialProps = await getInitialPropsFromComponent(Page)
-    //   console.log('initialProps = ', initialProps)
-    // }
-    //
-    // return ({ ctx, ...rest }) => {
-    //   console.log('render async!')
-    //   console.log('ctx = ', ctx)
-    //   if (ctx) {
-    //     // Set initialProps reference to ctx.
-    //     rememberInitialProps(ctx, initialProps)
-    //
-    //     // Get initialProps from ctx(or window.)
-    //     initialProps = getInitialProps(ctx)
-    //   }
-    //
-    //   return <Page {...initialProps} {...rest} />
-    // }
+    // return import(`.${page}`).catch(onImportError)
+    let Page = await import(`.${page}`).catch(onImportError)
+
+    // Handle default export.
+    Page = Page.default ? Page.default : Page
+
+    let initialProps = getInitialProps()
+
+    // Get initialProps.
+    if (!isBrowser) {
+      initialProps = await getInitialPropsFromComponent(Page)
+    } else if (!isInitialRender) {
+      initialProps = await getInitialPropsFromComponent(Page)
+      rememberInitialProps(initialProps)
+    }
+
+    return ({ ctx, ...rest }) => {
+      isInitialRender = false
+
+      // FIXME: We may have more better way than this.
+      // TODO: Deal with How to access ctx outside of render.
+      if (ctx) {
+        // Set initialProps reference to ctx.
+        rememberInitialProps(initialProps, ctx)
+      }
+
+      // Get initialProps from ctx(or window.)
+      initialProps = getInitialProps(ctx)
+
+      // Then render page with resolved initialProps.
+      return <Page {...initialProps} {...rest} />
+    }
   }, { ErrorComponent, LoadingComponent })
 }, {})
 

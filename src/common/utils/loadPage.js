@@ -34,6 +34,8 @@ const onImportError = (err) => {
   return () => null
 }
 
+let isRenderedOnce = false
+
 export default (ctx = {}) => {
   const path = getPath(ctx)
   return loadable(
@@ -53,6 +55,8 @@ export default (ctx = {}) => {
 
       // Set initialProps reference to ctx.
       rememberInitialProps(ctx, initialProps)
+
+      isRenderedOnce = true
 
       return props => <Page {...initialProps} {...props} />
     },
