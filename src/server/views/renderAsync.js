@@ -2,6 +2,9 @@ import _ from 'lodash'
 import { renderToString } from 'react-dom/server'
 import { Helmet } from 'react-helmet'
 import { getLoadableState } from 'loadable-components/server'
+import {
+  getScriptTag as getPagesScriptTag
+} from 'common/utils/fetchPages'
 
 import {
   getScriptTag as getInitialPropsScriptTag
@@ -17,6 +20,7 @@ export default async (app, ctx) => {
 
   const loadableStateScript = loadableState.getScriptTag()
   const initialPropsScript = getInitialPropsScriptTag(ctx)
+  const pagesScript = getPagesScriptTag()
 
   return source`
     <!doctype html>
@@ -38,6 +42,7 @@ export default async (app, ctx) => {
           
           ${loadableStateScript}
           ${initialPropsScript}
+          ${pagesScript}
           <script src="/main.bundle.js"></script>
         </body>
     </html>

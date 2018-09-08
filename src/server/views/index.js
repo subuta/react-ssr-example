@@ -13,7 +13,7 @@ router.get('*', async (ctx) => {
 
   const app = (
     <StaticRouter context={routerContext} location={ctx.url}>
-      <App />
+      <App ctx={ctx} />
     </StaticRouter>
   )
 

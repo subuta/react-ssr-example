@@ -1,7 +1,7 @@
 import React from 'react'
 import loadable from 'loadable-components'
 
-const AsyncComponent = loadable(() => import('./Component'))
+const AsyncComponent = loadable(() => import('./_Component'))
 
 export default () => {
   return (

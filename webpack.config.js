@@ -104,6 +104,11 @@ config
 config.optimization
   .noEmitOnErrors(true)
 
+// Mock nodejs-only modules
+config.node
+  .set('fs', 'empty')
+  .set('path', 'empty')
+
 // Dev-only setting
 config
   .when(dev, devConfig => {
