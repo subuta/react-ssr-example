@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
-const bar = () => {
+const Bar = () => {
   return (
     <>
       <Helmet>
@@ -14,10 +14,10 @@ const bar = () => {
   )
 }
 
-bar.getInitialProps = async () => {
+Bar.getInitialProps = async () => {
   console.log('Wait 1s before render...')
   // Simple wait example.
   await wait(1000)
 }
 
-export default bar
+export default Bar

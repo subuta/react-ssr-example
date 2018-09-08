@@ -2,10 +2,15 @@ import '@babel/polyfill'
 
 import React from 'react' // eslint-disable-line
 import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { loadComponents } from 'loadable-components'
-import createApp from 'common/utils/createApp'
+import App from 'common/layout/App'
 
-const app = createApp()
+const app = (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+)
 
 const render = () => {
   ReactDOM.hydrate(app, document.getElementById('app'))
