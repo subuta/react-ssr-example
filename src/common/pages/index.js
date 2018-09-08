@@ -52,6 +52,7 @@ const Routes = _.transform(getPages(), (result, page) => {
     let initialProps = getInitialProps()
 
     // Get initialProps.
+    // FIXME: getInitialProps call only occurred once after server started.
     if (!isBrowser) {
       initialProps = await getInitialPropsFromComponent(Page)
     }
