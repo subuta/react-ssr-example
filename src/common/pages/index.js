@@ -8,13 +8,13 @@ import {
 } from 'common/utils/fetchPages'
 
 import {
-  getInitialProps,
-  getInitialPropsFromComponent,
-  rememberInitialProps
+  getInitialProps
 } from 'common/utils/initialProps'
 
-import isBrowser from 'common/utils/isBrowser'
+import getPath from 'common/utils/getPath'
+
 import log from 'common/utils/log'
+
 import Page404 from './404'
 
 const LoadingComponent = () => {
@@ -39,39 +39,43 @@ const onImportError = (err) => {
   return () => null
 }
 
-// Generate Routes for pages with code-splitting(via loadable-components).
-const Routes = _.transform(getPages(), (result, page) => {
-  result[page] = loadable(async () => {
-    // return import(`.${page}`).catch(onImportError)
-    let Page = await import(`.${page}`).catch(onImportError)
-
-    // Handle default export.
-    Page = Page.default ? Page.default : Page
-
-    // Get initialProps from ctx(or window.)
-    let initialProps = getInitialProps()
-
-    // Get initialProps.
-    // FIXME: getInitialProps call only occurred once after server started.
-    if (!isBrowser) {
-      initialProps = await getInitialPropsFromComponent(Page)
+export const Pages = _.transform(getPages(), (result, page) => {
+  result[page] = loadable(
+    async () => await import(`.${page}`).catch(onImportError),
+    {
+      ErrorComponent,
+      LoadingComponent
     }
-
-    return ({ ctx, ...rest }) => {
-      // Set initialProps reference to ctx.
-      if (ctx) rememberInitialProps(initialProps, ctx)
-      // Then render page with resolved initialProps.
-      return <Page {...initialProps} {...rest} />
-    }
-  }, { ErrorComponent, LoadingComponent })
+  )
 }, {})
 
 export default ({ ctx }) => {
+  const currentPath = getPath(ctx)
+
   return (
     <Switch>
-      {_.map(Routes, (Component, path) => (
-        <Route exact key={path} path={path} component={(props) => <Component {...props} ctx={ctx} />} />
-      ))}
+      {_.map(Pages, (Component, path) => {
+        // if currentPath
+        if (path === currentPath) {
+          // Then render with initialProps.
+          const initialProps = getInitialProps(ctx) || {}
+          return (
+            <Route exact
+                   key={path}
+                   path={path}
+                   component={(props) => <Component {...props} {...initialProps} />}
+            />
+          )
+        }
+        return (
+          <Route
+            exact
+            key={path}
+            path={path}
+            component={(props) => <Component {...props} />}
+          />
+        )
+      })}
       <Route path='*' component={Page404} />
     </Switch>
   )

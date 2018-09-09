@@ -1,5 +1,6 @@
 import React from 'react'
 import { source } from 'common-tags'
+import _ from 'lodash'
 
 import { renderToString } from 'react-dom/server'
 import { Helmet } from 'react-helmet'
@@ -9,14 +10,17 @@ import Router from 'koa-router'
 import { StaticRouter } from 'react-router-dom'
 
 import App from 'common/layout/App'
+import { Pages } from 'common/pages'
+
+import {
+  getInitialPropsFromComponent,
+  rememberInitialProps,
+  getScriptTag as getInitialPropsScriptTag
+} from 'common/utils/initialProps'
 
 import {
   getScriptTag as getPagesScriptTag
 } from 'common/utils/fetchPages'
-
-import {
-  getScriptTag as getInitialPropsScriptTag
-} from 'common/utils/initialProps'
 
 const router = new Router()
 
@@ -29,7 +33,16 @@ router.get('*', async (ctx) => {
     </StaticRouter>
   )
 
+  // Wait for loadable-components.
   const loadableState = await getLoadableState(app)
+
+  const Page = _.get(Pages, ctx.url, null)
+  if (Page) {
+    // Call getInitialProps of Page if defined.
+    // Fetch initialProps and remember it in ctx.
+    const initialProps = await getInitialPropsFromComponent(Page)
+    rememberInitialProps(initialProps, ctx)
+  }
 
   const html = renderToString(app)
   const helmet = Helmet.renderStatic()
