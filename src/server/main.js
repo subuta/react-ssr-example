@@ -9,7 +9,7 @@ import dev from 'common/utils/dev'
 
 import {
   syncPages
-} from 'common/utils/syncPages'
+} from './utils/syncPages'
 
 import {
   ROOT_DIR,
@@ -59,7 +59,9 @@ if (dev) {
   app.use(views.allowedMethods())
 }
 
-
+app.on('error', (err, ctx) => {
+  console.error('err = ', err)
+})
 
 // Serve the files on port.
 app.listen(port, function () {

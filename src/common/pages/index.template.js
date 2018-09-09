@@ -43,7 +43,7 @@ const onImportError = (err) => { // eslint-disable-line
   return () => null
 }
 
-// Pages will be injected for better hmr support.
+// Pages will be injected to here for better hmr support.
 /* eslint-disable */
 export const Pages = []
 /* eslint-enable */
