@@ -1,6 +1,8 @@
 import React from 'react'
 import { source } from 'common-tags'
 import _ from 'lodash'
+import path from 'path'
+import clearModule from 'clear-module'
 
 import { renderToString } from 'react-dom/server'
 import { Helmet } from 'react-helmet'
@@ -11,6 +13,7 @@ import { StaticRouter } from 'react-router-dom'
 
 import App from 'common/layout/App'
 import { Pages } from 'common/pages'
+import dev from 'common/utils/dev'
 
 import {
   getInitialPropsFromComponent,
@@ -19,8 +22,26 @@ import {
 } from 'common/utils/initialProps'
 
 import {
-  getScriptTag as getPagesScriptTag
-} from 'common/utils/fetchPages'
+  injectPages
+} from 'common/utils/injectPages'
+
+import {
+  PAGES_DIR
+} from '../../../config'
+
+// Fetch current pages and
+// injectPages()
+
+// if (dev) {
+//   // Server side hot-module-replacement :)
+//   const watcher = require('sane')(PAGES_DIR, { ignored: 'index.js' })
+//   watcher.on('ready', () => {
+//     watcher.on(['add', 'delete'], () => {
+//       console.log('Detect changes at common/pages')
+//       injectPages()
+//     })
+//   })
+// }
 
 const router = new Router()
 
@@ -49,7 +70,6 @@ router.get('*', async (ctx) => {
 
   const loadableStateScript = loadableState.getScriptTag()
   const initialPropsScript = getInitialPropsScriptTag(ctx)
-  const pagesScript = getPagesScriptTag()
 
   ctx.body = source`
     <!doctype html>
@@ -71,7 +91,6 @@ router.get('*', async (ctx) => {
           
           ${loadableStateScript}
           ${initialPropsScript}
-          ${pagesScript}
           <script src="/main.bundle.js"></script>
         </body>
     </html>

@@ -5,6 +5,8 @@ import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
 
+import dev from 'common/utils/dev'
+
 import {
   ROOT_DIR,
   PUBLIC_DIR
@@ -22,9 +24,6 @@ app.use(logger())
 
 // parse body
 app.use(koaBody())
-
-// detect is dev
-const dev = process.env.NODE_ENV !== 'production'
 
 if (dev) {
   // Server side hot-module-replacement :)
