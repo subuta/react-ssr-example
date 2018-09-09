@@ -10,7 +10,7 @@ const Foo = () => {
         <title>Foo | React SSR Example</title>
       </Helmet>
 
-      <h1>Fooplu</h1>
+      <h1>Foo</h1>
       <Counter />
     </>
   )

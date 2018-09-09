@@ -43,6 +43,7 @@ export const Pages = []
 export default ({ ctx }) => {
   const currentPath = getPath(ctx)
 
+  /* eslint-disable */
   return (
     <Switch>
       {_.map(Pages, (Component, path) => {
@@ -54,7 +55,7 @@ export default ({ ctx }) => {
             <Route exact
               key={path}
               path={path}
-              component={(props) => <Component {...props} {...initialProps} />}
+              component={Component}
             />
           )
         }
@@ -63,11 +64,12 @@ export default ({ ctx }) => {
             exact
             key={path}
             path={path}
-            component={(props) => <Component {...props} />}
+            component={Component}
           />
         )
       })}
       <Route path='*' component={Page404} />
     </Switch>
   )
+  /* eslint-enable */
 }

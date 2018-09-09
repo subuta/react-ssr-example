@@ -1,8 +1,6 @@
 import React from 'react'
 import { source } from 'common-tags'
 import _ from 'lodash'
-import path from 'path'
-import clearModule from 'clear-module'
 
 import { renderToString } from 'react-dom/server'
 import { Helmet } from 'react-helmet'
@@ -11,37 +9,14 @@ import { getLoadableState } from 'loadable-components/server'
 import Router from 'koa-router'
 import { StaticRouter } from 'react-router-dom'
 
-import App from 'common/layout/App'
-import { Pages } from 'common/pages'
-import dev from 'common/utils/dev'
-
 import {
   getInitialPropsFromComponent,
   rememberInitialProps,
   getScriptTag as getInitialPropsScriptTag
 } from 'common/utils/initialProps'
 
-import {
-  injectPages
-} from 'common/utils/injectPages'
-
-import {
-  PAGES_DIR
-} from '../../../config'
-
-// Fetch current pages and
-// injectPages()
-
-// if (dev) {
-//   // Server side hot-module-replacement :)
-//   const watcher = require('sane')(PAGES_DIR, { ignored: 'index.js' })
-//   watcher.on('ready', () => {
-//     watcher.on(['add', 'delete'], () => {
-//       console.log('Detect changes at common/pages')
-//       injectPages()
-//     })
-//   })
-// }
+import App from 'common/layout/App'
+import { Pages } from 'common/pages'
 
 const router = new Router()
 

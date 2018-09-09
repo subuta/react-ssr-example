@@ -8,8 +8,21 @@ import {
   PAGES_DIR
 } from '../../../config'
 
+import dev from 'common/utils/dev'
+
 const PAGES_INDEX_TEMPLATE_FILE = path.resolve(PAGES_DIR, './index.template.js')
 const PAGES_INDEX_FILE = path.resolve(PAGES_DIR, './index.js')
+
+if (dev) {
+  // Watch for common/pages changes. :)
+  const watcher = require('sane')(PAGES_DIR, { ignored: 'index.js' })
+  watcher.on('ready', () => {
+    watcher.on('all', () => {
+      console.log('Detect changes at common/pages')
+      syncPages()
+    })
+  })
+}
 
 // Find page-components from `/pages`
 export const fetchPages = () => {
@@ -27,7 +40,7 @@ export const fetchPages = () => {
 }
 
 // Inject found pages into `common/pages/index.js`
-export const injectPages = () => {
+export const syncPages = () => {
   let template = fs.readFileSync(PAGES_INDEX_TEMPLATE_FILE, 'utf8')
 
   const pages = fetchPages()
@@ -47,4 +60,4 @@ export const injectPages = () => {
   console.log('pages = ', pages)
 }
 
-export default injectPages
+export default syncPages

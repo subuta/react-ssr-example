@@ -8,6 +8,10 @@ import path from 'path'
 import dev from 'common/utils/dev'
 
 import {
+  syncPages
+} from 'common/utils/syncPages'
+
+import {
   ROOT_DIR,
   PUBLIC_DIR
 } from '../../config'
@@ -15,6 +19,9 @@ import {
 const {
   PORT
 } = process.env
+
+// Seek and sync common/pages.
+syncPages()
 
 const port = parseInt(PORT, 10) || 3000
 const app = new Koa()
@@ -51,6 +58,8 @@ if (dev) {
   app.use(views.routes())
   app.use(views.allowedMethods())
 }
+
+
 
 // Serve the files on port.
 app.listen(port, function () {
