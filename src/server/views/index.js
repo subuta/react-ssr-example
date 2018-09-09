@@ -21,11 +21,9 @@ import { Pages } from 'common/pages'
 const router = new Router()
 
 router.get('*', async (ctx) => {
-  const routerContext = {}
-
   const app = (
-    <StaticRouter context={routerContext} location={ctx.url}>
-      <App ctx={ctx} />
+    <StaticRouter context={{ ctx }} location={ctx.url}>
+      <App />
     </StaticRouter>
   )
 
@@ -37,7 +35,7 @@ router.get('*', async (ctx) => {
     // Call getInitialProps of Page if defined.
     // Fetch initialProps and remember it in ctx.
     const initialProps = await getInitialPropsFromComponent(Page)
-    rememberInitialProps(initialProps, ctx)
+    rememberInitialProps({ [ctx.url]: initialProps }, ctx)
   }
 
   const html = renderToString(app)

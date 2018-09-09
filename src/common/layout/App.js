@@ -7,13 +7,13 @@ import {
 } from 'recompose'
 
 import Header from './Header'
-import Page from 'common/pages'
+import Pages from 'common/pages'
 
 const enhance = compose(
   hot(module)
 )
 
-export default enhance(({ ctx }) => {
+export default enhance(() => {
   return (
     <>
       <Helmet>
@@ -23,7 +23,7 @@ export default enhance(({ ctx }) => {
 
       <Header />
 
-      <Page ctx={ctx} />
+      <Pages />
     </>
   )
 })
