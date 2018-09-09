@@ -14,13 +14,17 @@ const PAGES_INDEX_TEMPLATE_FILE = path.resolve(PAGES_DIR, './index.template.js')
 const PAGES_INDEX_FILE = path.resolve(PAGES_DIR, './index.js')
 
 if (dev) {
-  // Watch for common/pages changes. :)
-  const watcher = require('sane')(PAGES_DIR, { ignored: ['index.js'] })
+  // Watch for common/pages changes.
+  const watcher = require('sane')(PAGES_DIR, { ignored: ['./index.js'] })
+
+  const onChange = () => {
+    console.log('Detect changes at common/pages')
+    syncPages()
+  }
+
   watcher.on('ready', () => {
-    watcher.on('all', () => {
-      console.log('Detect changes at common/pages')
-      syncPages()
-    })
+    watcher.on('add', onChange)
+    watcher.on('delete', onChange)
   })
 }
 

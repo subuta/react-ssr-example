@@ -114,8 +114,7 @@ config
     devConfig
       .plugin('friendly-errors')
       .use(FriendlyErrorsWebpackPlugin, [{
-        // Whether clear console after compile or not.
-        clearConsole: !isAnalyze
+        clearConsole: false
       }])
 
     devConfig
