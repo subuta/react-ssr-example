@@ -9,7 +9,9 @@ const Bar = () => {
         <title>Bar | React SSR Example</title>
       </Helmet>
 
-      <h1>bar</h1>
+      <h1>Bar</h1>
+
+      <span>1 seconds elapsed since getInitialProps().</span>
     </>
   )
 }

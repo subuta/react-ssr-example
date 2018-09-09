@@ -66,8 +66,7 @@ config.module
 
 config.devServer
   .hot(true)
-  // .quiet(true)
-  // .noInfo(true)
+  .noInfo(true)
   .contentBase(PUBLIC_DIR)
   .proxy({
     '/': 'http://localhost:3000'
