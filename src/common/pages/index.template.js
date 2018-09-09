@@ -13,15 +13,12 @@ import log from 'common/utils/log'
 
 import Page404 from './404'
 
-const LoadingComponent = () => { // eslint-disable-line
-  return (
-    <div>Loading...</div>
-  )
-}
-
-const ErrorComponent = (props) => { // eslint-disable-line
-  console.log('props.error = ', props.error)
-  return <div>Error!</div>
+const renderLoadable = ({ Component, loading, error, ownProps }) => { // eslint-disable-line
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Oups! {error.message}</div>
+  // const currentPath = getPath()
+  const initialProps = getInitialProps()
+  return <Component {...initialProps} {...ownProps} />
 }
 
 const onImportError = (err) => { // eslint-disable-line
@@ -41,35 +38,12 @@ export const Pages = []
 /* eslint-enable */
 
 export default ({ ctx }) => {
-  const currentPath = getPath(ctx)
-
-  /* eslint-disable */
   return (
     <Switch>
-      {_.map(Pages, (Component, path) => {
-        // if currentPath
-        if (path === currentPath) {
-          // Then render with initialProps.
-          const initialProps = getInitialProps(ctx) || {}
-          return (
-            <Route exact
-              key={path}
-              path={path}
-              component={Component}
-            />
-          )
-        }
-        return (
-          <Route
-            exact
-            key={path}
-            path={path}
-            component={Component}
-          />
-        )
-      })}
+      {_.map(Pages, (Component, path) => (
+        <Route exact key={path} path={path} component={Component} />
+      ))}
       <Route path='*' component={Page404} />
     </Switch>
   )
-  /* eslint-enable */
 }

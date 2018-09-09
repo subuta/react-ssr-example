@@ -15,7 +15,7 @@ const PAGES_INDEX_FILE = path.resolve(PAGES_DIR, './index.js')
 
 if (dev) {
   // Watch for common/pages changes. :)
-  const watcher = require('sane')(PAGES_DIR, { ignored: 'index.js' })
+  const watcher = require('sane')(PAGES_DIR, { ignored: ['index.js'] })
   watcher.on('ready', () => {
     watcher.on('all', () => {
       console.log('Detect changes at common/pages')
@@ -45,13 +45,20 @@ export const syncPages = () => {
 
   const pages = fetchPages()
 
+  const getPageName = (page) => _.upperFirst(_.camelCase('Page' + page))
+
+  const defs = _.map(pages, (page) => (
+    `const ${getPageName(page)} = loadable(async () => import('.${page}').catch(onImportError), { render: renderLoadable })`
+  )).join('\n')
+
   const Pages = source`
+    ${defs}
+    
     export const Pages = {
       ${_.map(pages, (page) => (source`
-        '${page}': loadable(async () => import('.${page}').catch(onImportError), { LoadingComponent, ErrorComponent })
+        '${page}': ${getPageName(page)}
       `)).join(',\n')}
-    }
-  `
+    }`
 
   template = template.replace(/export const Pages = \[]/g, `${Pages}`)
 
