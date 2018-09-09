@@ -14,7 +14,7 @@ const Baz = (props) => {
         <title>Baz | React SSR Example</title>
       </Helmet>
 
-      <h1>Bazs</h1>
+      <h1>Baz</h1>
 
       <ul>
         {_.map(jokes, ({ id, joke }) => (
