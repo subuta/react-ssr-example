@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet'
 import _ from 'lodash'
 import fetch from 'isomorphic-unfetch'
 
+import Counter from 'common/components/Counter'
+import asPage from 'common/hocs/asPage'
+
 const Baz = (props) => {
   const {
     jokes = []
@@ -15,6 +18,8 @@ const Baz = (props) => {
       </Helmet>
 
       <h1>Baz</h1>
+
+      <Counter />
 
       <ul>
         {_.map(jokes, ({ id, joke }) => (
@@ -36,4 +41,4 @@ Baz.getInitialProps = async () => {
   }
 }
 
-export default Baz
+export default asPage(Baz)

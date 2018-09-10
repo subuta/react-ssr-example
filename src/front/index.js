@@ -6,9 +6,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { loadComponents } from 'loadable-components'
 import App from 'common/layout/App'
 
-// TODO: remove forceRefresh after implement better handling of getInitialProps.
 const app = (
-  <BrowserRouter forceRefresh>
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 )

@@ -1,0 +1,63 @@
+import {
+  compose,
+  withState,
+  branch,
+  lifecycle,
+  renderComponent,
+  mapProps,
+  hoistStatics
+} from 'recompose'
+import _ from 'lodash'
+
+import {
+  getInitialPropsFromComponent,
+  getInitialPropsFromContext,
+  forgetInitialProps
+} from 'common/utils/initialProps'
+import isBrowser from 'common/utils/isBrowser'
+
+// FIXME: Might be replaced with Suspense API? :)
+// SEE: https://reactjs.org/blog/2018/03/01/sneak-peek-beyond-react-16.html
+// TIPS: hoisting getInitialProps by calling `hoistStatics` and pass enhancer.
+export default (Component) => hoistStatics(compose(
+  // Get props from react-router's staticContext.
+  withState('initialProps', 'setInitialProps', (props) => {
+    // Get react-router's staticContext.
+    const context = _.get(props, 'staticContext', {})
+    return getInitialPropsFromContext(context)
+  }),
+  lifecycle({
+    componentDidMount () {
+      const { initialProps, setInitialProps } = this.props
+
+      // Forget initialProps for prompt client-side resolving of getInitialProps.
+      if (isBrowser) {
+        forgetInitialProps()
+      }
+
+      let promise = Promise.resolve(initialProps)
+      if (initialProps === null) {
+        // Call getInitialProps otherwise(while client-side routing)
+        promise = getInitialPropsFromComponent(Component)
+      }
+
+      promise.then((initialProps) => setInitialProps(initialProps))
+    }
+  }),
+  // Delay component render while resolving.
+  branch(
+    ({ initialProps }) => {
+      // Skip delay while SSR.
+      return isBrowser && initialProps === null
+    },
+    renderComponent(() => null),
+    _.identity
+  ),
+  mapProps(({ initialProps, ...rest }) => {
+    // Merge initialProps into props.
+    return {
+      ...rest,
+      ...initialProps
+    }
+  })
+))(Component)

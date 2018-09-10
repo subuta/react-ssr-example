@@ -2,6 +2,8 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
+import asPage from 'common/hocs/asPage'
+
 const Bar = () => {
   return (
     <>
@@ -22,4 +24,4 @@ Bar.getInitialProps = async () => {
   await wait(1000)
 }
 
-export default Bar
+export default asPage(Bar)

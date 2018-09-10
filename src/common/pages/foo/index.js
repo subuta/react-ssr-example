@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
+import asPage from 'common/hocs/asPage'
 import Counter from 'common/components/Counter'
 
 const Foo = () => {
@@ -16,4 +17,4 @@ const Foo = () => {
   )
 }
 
-export default Foo
+export default asPage(Foo)

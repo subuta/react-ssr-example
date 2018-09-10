@@ -1,7 +1,9 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-export default () => {
+import asPage from 'common/hocs/asPage'
+
+const Nyan = () => {
   return (
     <>
       <Helmet>
@@ -12,3 +14,5 @@ export default () => {
     </>
   )
 }
+
+export default asPage(Nyan)
