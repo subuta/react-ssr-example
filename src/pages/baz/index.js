@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet'
 import _ from 'lodash'
 import fetch from 'isomorphic-unfetch'
 
-import Counter from 'common/components/Counter'
-import asPage from 'common/hocs/asPage'
-import Header from 'common/layout/Header'
+import Counter from 'components/Counter'
+import asPage from 'lib/hocs/asPage'
+import Header from 'components/Header'
 
 const Baz = (props) => {
   const {

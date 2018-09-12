@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Counter from 'common/components/Counter'
+import Counter from 'components/Counter'
 
 export default () => {
   return (

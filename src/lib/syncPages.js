@@ -5,20 +5,21 @@ import path from 'path'
 import { source } from 'common-tags'
 
 import {
+  LIB_DIR,
   PAGES_DIR
 } from '../../config'
 
-import { dev } from 'common/utils/env'
+import { dev } from 'lib/utils/env'
 
-const PAGES_INDEX_TEMPLATE_FILE = path.resolve(PAGES_DIR, './index.template.js')
+const PAGES_INDEX_TEMPLATE_FILE = path.resolve(LIB_DIR, './page.js')
 const PAGES_INDEX_FILE = path.resolve(PAGES_DIR, './index.js')
 
 if (dev) {
-  // Watch for common/pages changes.
+  // Watch for /pages changes.
   const watcher = require('sane')(PAGES_DIR, { ignored: ['./index.js'] })
 
   const onChange = () => {
-    console.log('Detect changes at common/pages')
+    console.log('Detect changes at /pages')
     syncPages()
   }
 
@@ -36,14 +37,14 @@ export const fetchPages = () => {
   // Find files from `/pages`
   const files = _.map(glob.sync('**/*.js', {
     cwd: PAGES_DIR,
-    ignore: ['**/_*.js', '**/index.js', '404.js', 'index.template.js']
+    ignore: ['**/_*.js', '**/index.js']
   }), (file) => _.trimEnd(file, '.js'))
 
   // Concat and normalize as path (eg: `/foo`)
   return _.map([...files, ...directories], (page) => `/${_.toLower(page)}`)
 }
 
-// Inject found pages into `common/pages/index.js`
+// Inject found pages into `/pages/index.js`
 export const syncPages = () => {
   let template = fs.readFileSync(PAGES_INDEX_TEMPLATE_FILE, 'utf8')
 

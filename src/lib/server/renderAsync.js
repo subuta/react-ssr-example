@@ -13,11 +13,11 @@ import {
   getInitialPropsFromComponent,
   rememberInitialProps,
   getScriptElement as getInitialPropsScriptElement
-} from 'common/utils/initialProps'
+} from 'lib/utils/initialProps'
 
 import unwrapModule from 'lib/utils/unwrapModule'
 
-import { Pages } from 'common/pages'
+import { Pages } from 'pages'
 
 import _ from 'lodash'
 
@@ -26,12 +26,12 @@ export default async (url, options = {}) => {
 
   // Defaults to pre-defined App.
   if (!App) {
-    App = unwrapModule(require('lib/App'))
+    App = unwrapModule(require('lib/components/App'))
   }
 
   // Defaults to pre-defined Document.
   if (!Document) {
-    Document = unwrapModule(require('lib/server/document'))
+    Document = unwrapModule(require('lib/components/Document'))
   }
 
   // Common context that will shared between modules while rendering.

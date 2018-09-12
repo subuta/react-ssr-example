@@ -1,9 +1,9 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-import asPage from 'common/hocs/asPage'
-import Counter from 'common/components/Counter'
-import Header from 'common/layout/Header'
+import asPage from 'lib/hocs/asPage'
+import Counter from 'components/Counter'
+import Header from 'components/Header'
 
 const Foo = () => {
   return (
@@ -13,6 +13,8 @@ const Foo = () => {
       </Helmet>
 
       <Header />
+
+      <h1>Foo</h1>
 
       <Counter />
     </>

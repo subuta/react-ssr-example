@@ -10,7 +10,7 @@ export default async (selector = '#app', options = {}) => {
 
   // Defaults to pre-defined App.
   if (!App) {
-    App = unwrapModule(require('lib/App'))
+    App = unwrapModule(require('lib/components/App'))
   }
 
   const app = (

@@ -2,8 +2,8 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
-import asPage from 'common/hocs/asPage'
-import Header from 'common/layout/Header'
+import asPage from 'lib/hocs/asPage'
+import Header from 'components/Header'
 
 const Bar = () => {
   return (

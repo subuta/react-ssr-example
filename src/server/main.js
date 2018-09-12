@@ -5,7 +5,9 @@ import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
 
-import { dev } from 'common/utils/env'
+import {
+  syncPages
+} from 'lib/syncPages'
 
 import {
   ROOT_DIR,
@@ -15,6 +17,11 @@ import {
 const {
   PORT
 } = process.env
+
+const dev = process.env.NODE_ENV !== 'production'
+
+// Seek and sync /pages.
+syncPages()
 
 const port = parseInt(PORT, 10) || 3000
 const app = new Koa()
@@ -54,6 +61,16 @@ if (dev) {
 
 app.on('error', (err, ctx) => {
   console.error('err = ', err)
+})
+
+process.on('uncaughtException', (err) => {
+  // Ignore error for page deletion.
+  if (err.message.match(/Cannot find module '.*\/pages(\/.*)\.js'/)) {
+    const matched = err.message.match(/Cannot find module '.*\/pages(\/.*)\.js'/)
+    console.log(`Page '${matched[1]}' deleted.`)
+    return
+  }
+  console.error('[process]err = ', err)
 })
 
 // Serve the files on port.

@@ -13,8 +13,8 @@ import {
   getInitialPropsFromComponent,
   getInitialPropsFromContext,
   forgetInitialProps
-} from 'common/utils/initialProps'
-import { isBrowser } from 'common/utils/env'
+} from 'lib/utils/initialProps'
+import { isBrowser } from 'lib/utils/env'
 
 // FIXME: Might be replaced with Suspense API? :)
 // SEE: https://reactjs.org/blog/2018/03/01/sneak-peek-beyond-react-16.html
