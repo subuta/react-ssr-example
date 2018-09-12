@@ -6,9 +6,9 @@ import { source } from 'common-tags'
 
 import {
   PAGES_DIR
-} from '../../../config'
+} from '../../config'
 
-import dev from 'common/utils/dev'
+import { dev } from 'common/utils/env'
 
 const PAGES_INDEX_TEMPLATE_FILE = path.resolve(PAGES_DIR, './index.template.js')
 const PAGES_INDEX_FILE = path.resolve(PAGES_DIR, './index.js')

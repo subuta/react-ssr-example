@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
+import Header from 'common/layout/Header'
 import asPage from 'common/hocs/asPage'
 
 const Nyan = () => {
@@ -9,6 +10,8 @@ const Nyan = () => {
       <Helmet>
         <title>Nyan</title>
       </Helmet>
+
+      <Header />
 
       <h1>Nyan</h1>
     </>

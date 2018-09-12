@@ -5,6 +5,7 @@ import fetch from 'isomorphic-unfetch'
 
 import Counter from 'common/components/Counter'
 import asPage from 'common/hocs/asPage'
+import Header from 'common/layout/Header'
 
 const Baz = (props) => {
   const {
@@ -16,6 +17,8 @@ const Baz = (props) => {
       <Helmet>
         <title>Baz | React SSR Example</title>
       </Helmet>
+
+      <Header />
 
       <h1>Baz</h1>
 

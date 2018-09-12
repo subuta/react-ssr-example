@@ -2,6 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import asPage from 'common/hocs/asPage'
+import Header from 'common/layout/Header'
 
 const Foo = () => {
   return (
@@ -9,6 +10,8 @@ const Foo = () => {
       <Helmet>
         <title>Baz - Foo</title>
       </Helmet>
+
+      <Header />
 
       <h1>Baz - Foo</h1>
     </>

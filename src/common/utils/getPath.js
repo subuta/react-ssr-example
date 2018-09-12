@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import isBrowser from './isBrowser'
+import { isBrowser } from './env'
 
 export default (ctx = {}) => {
-  if (!isBrowser) return _.get(ctx, 'path', '')
+  if (!isBrowser) return _.get(ctx, 'url', '')
   // Get path from location.
   return _.first(_.get(window, 'location.pathname').split('?'))
 }

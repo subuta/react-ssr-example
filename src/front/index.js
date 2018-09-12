@@ -1,10 +1,6 @@
 import '@babel/polyfill'
 
-import React from 'react' // eslint-disable-line
-import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
-import { loadComponents } from 'loadable-components'
-import App from 'common/layout/App'
+import render from 'lib/client/render'
 
 // SEE: http://bluebirdjs.com/docs/api/promise.config.html
 // Add settings for bluebird.
@@ -19,18 +15,7 @@ Promise.config({
   monitoring: false
 })
 
-const app = (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-)
-
-const render = () => {
-  ReactDOM.hydrate(app, document.getElementById('app'))
-}
-
 const main = async () => {
-  await loadComponents()
   render()
 }
 

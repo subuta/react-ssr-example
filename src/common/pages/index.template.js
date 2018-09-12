@@ -10,7 +10,7 @@ import {
   getInitialProps,
   getInitialPropsFromContext
 } from 'common/utils/initialProps'
-import isBrowser from 'common/utils/isBrowser'
+import { isBrowser } from 'common/utils/env'
 
 import Page404 from './404'
 

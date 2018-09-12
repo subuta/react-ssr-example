@@ -1,5 +1,7 @@
+import React from 'react'
+
 import _ from 'lodash'
-import isBrowser from './isBrowser'
+import { isBrowser } from './env'
 import getPath from './getPath'
 
 const KEY = '__INITIAL_PROPS__'
@@ -47,8 +49,18 @@ export const getInitialPropsFromContext = (context) => {
   return _.get(getInitialProps(ctx), currentPath, null)
 }
 
-export const getScriptTag = (ctx) => {
+const getScriptContent = (ctx) => {
   // Retrieve initialProps for page.
   const initialProps = getInitialProps(ctx)
-  return `<script>window.${KEY} = ${JSON.stringify(initialProps)};</script>`
+  return `window.${KEY} = ${JSON.stringify(initialProps)};`
+}
+
+export const getScriptTag = (ctx) => {
+  return `<script>${getScriptContent(ctx)}</script>`
+}
+
+export const getScriptElement = (ctx) => {
+  return (
+    <script dangerouslySetInnerHTML={{ __html: getScriptContent(ctx) }} />
+  )
 }

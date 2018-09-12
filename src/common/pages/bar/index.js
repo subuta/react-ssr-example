@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
 import asPage from 'common/hocs/asPage'
+import Header from 'common/layout/Header'
 
 const Bar = () => {
   return (
@@ -10,6 +11,8 @@ const Bar = () => {
       <Helmet>
         <title>Bar | React SSR Example</title>
       </Helmet>
+
+      <Header />
 
       <h1>Bar</h1>
 

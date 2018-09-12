@@ -14,7 +14,7 @@ import {
   getInitialPropsFromContext,
   forgetInitialProps
 } from 'common/utils/initialProps'
-import isBrowser from 'common/utils/isBrowser'
+import { isBrowser } from 'common/utils/env'
 
 // FIXME: Might be replaced with Suspense API? :)
 // SEE: https://reactjs.org/blog/2018/03/01/sneak-peek-beyond-react-16.html
@@ -47,7 +47,9 @@ export default (Component) => hoistStatics(compose(
     },
 
     componentWillUnmount () {
-      this.promise.cancel()
+      if (this.promise.cancel) {
+        this.promise.cancel()
+      }
     }
   }),
   // Delay component render while resolving.

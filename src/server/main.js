@@ -5,11 +5,7 @@ import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
 
-import dev from 'common/utils/dev'
-
-import {
-  syncPages
-} from './utils/syncPages'
+import { dev } from 'common/utils/env'
 
 import {
   ROOT_DIR,
@@ -19,9 +15,6 @@ import {
 const {
   PORT
 } = process.env
-
-// Seek and sync common/pages.
-syncPages()
 
 const port = parseInt(PORT, 10) || 3000
 const app = new Koa()

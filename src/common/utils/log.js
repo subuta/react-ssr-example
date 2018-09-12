@@ -1,5 +1,5 @@
 import debug from 'debug'
-import isBrowser from './isBrowser'
+import { isBrowser } from './env'
 
 export const log = (() => {
   // SEE: https://github.com/visionmedia/debug#output-streams
