@@ -1,5 +1,5 @@
 # React SSR Example
-Server-Side rendered react example :)
+Server-Side rendered + Client-Side routing (= Universal :earth_asia:) react example :)
 
 ### Feature
 
@@ -8,8 +8,6 @@ Server-Side rendered react example :)
   - based on [ultimate-hot-reloading-example](https://github.com/glenjamin/ultimate-hot-reloading-example)
 - Do SEO (google) and SMO (twitter, facebook...) for React app.
   - with [react-helmet](https://github.com/nfl/react-helmet)
-- Event Handlers are works as expected (SSR + Hydrate)
-  - with [loadable-components](https://github.com/smooth-code/loadable-components)
 - No complex routing logic needed anymore! (Will just render page in the `/pages`)
 - [next.js](https://github.com/zeit/next.js/) inspired `getInitialProps` lifecycle.
 
@@ -48,8 +46,3 @@ Run `npm run browsers` will list supported(will be polyfilled) browsers.
 Run `npm run lint` will do that based on [JavaScript Standard Style](https://standardjs.com/)
 
 and Run `npm run fix` will fix lint issues automatically :)
-
-> TypeError: Cannot read property 'hash' of undefined
-
-SEE: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
-Run `rm -rf ./node_modules/.cache/hard-source`
