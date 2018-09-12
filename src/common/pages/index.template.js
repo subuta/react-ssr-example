@@ -3,14 +3,24 @@ import { Switch, Route } from 'react-router-dom'
 import loadable from 'loadable-components' // eslint-disable-line
 import _ from 'lodash'
 
+import pMinDelay from 'p-min-delay'
+
 import log from 'common/utils/log'
 import {
-  getInitialPropsFromContext,
-  forgetInitialProps
+  getInitialProps,
+  getInitialPropsFromContext
 } from 'common/utils/initialProps'
 import isBrowser from 'common/utils/isBrowser'
 
 import Page404 from './404'
+
+const delay = promise => { // eslint-disable-line
+  if (!isBrowser) return promise
+  // Pass-through for initial render.
+  if (getInitialProps()) return promise
+  // Minimum delay for loading.
+  return pMinDelay(promise, 200)
+}
 
 const renderLoadable = ({ Component, loading, error, ownProps }) => { // eslint-disable-line
   if (loading) return <div>Loading...</div>

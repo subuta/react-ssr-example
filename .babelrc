@@ -21,6 +21,7 @@
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",
     "loadable-components/babel",
-    "babel-plugin-dynamic-import-node"
+    "babel-plugin-dynamic-import-node",
+    "transform-promise-to-bluebird"
   ]
 }

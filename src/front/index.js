@@ -6,6 +6,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { loadComponents } from 'loadable-components'
 import App from 'common/layout/App'
 
+// SEE: http://bluebirdjs.com/docs/api/promise.config.html
+// Add settings for bluebird.
+Promise.config({
+  // Enable warnings
+  warnings: false,
+  // Enable long stack traces
+  longStackTraces: false,
+  // Enable cancellation
+  cancellation: true,
+  // Enable monitoring
+  monitoring: false
+})
+
 const app = (
   <BrowserRouter>
     <App />

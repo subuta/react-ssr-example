@@ -52,7 +52,7 @@ export const syncPages = () => {
   const getPageName = (page) => _.upperFirst(_.camelCase('Page' + page))
 
   const defs = _.map(pages, (page) => (
-    `const ${getPageName(page)} = loadable(async () => import('.${page}').catch(onImportError), { render: renderLoadable })`
+    `const ${getPageName(page)} = loadable(async () => delay(import('.${page}')).catch(onImportError), { render: renderLoadable })`
   )).join('\n')
 
   const Pages = source`

@@ -6,10 +6,12 @@ const KEY = '__INITIAL_PROPS__'
 
 export const getInitialPropsFromComponent = async (Component) => {
   // Use getInitialProps if exists.
-  const getInitialProps = Component.getInitialProps || (() => Promise.resolve({}))
+  const getInitialProps = Component.getInitialProps || (() => Promise.resolve())
 
   // Await for resolving initialProps promise.
-  return getInitialProps() || {}
+  const result = await getInitialProps()
+
+  return result || {}
 }
 
 // Keep initialProps reference to ctx.

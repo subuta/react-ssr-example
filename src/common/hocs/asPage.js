@@ -35,13 +35,19 @@ export default (Component) => hoistStatics(compose(
         forgetInitialProps()
       }
 
-      let promise = Promise.resolve(initialProps)
+      this.promise = Promise.resolve(initialProps)
       if (initialProps === null) {
         // Call getInitialProps otherwise(while client-side routing)
-        promise = getInitialPropsFromComponent(Component)
+        this.promise = getInitialPropsFromComponent(Component)
       }
 
-      promise.then((initialProps) => setInitialProps(initialProps))
+      this.promise.then((initialProps) => {
+        setInitialProps(initialProps)
+      })
+    },
+
+    componentWillUnmount () {
+      this.promise.cancel()
     }
   }),
   // Delay component render while resolving.
