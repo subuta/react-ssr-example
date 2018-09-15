@@ -26,6 +26,11 @@ export async function copy (task) {
   await task.source(src.copy).target(dist.p)
 }
 
+// Do build pages manually(for Production).
+export async function buildPages (task) {
+  await task.source('src').shell('NODE_ENV=production node lib/cli sync-pages')
+}
+
 // Do build front-end(for Production).
 export async function buildFront (task) {
   await task.source('src').shell('NODE_ENV=production webpack --silent')
@@ -60,7 +65,7 @@ export async function babel (task) {
 
 // Do build back/front-end.
 export async function build (task) {
-  await task.serial(['clear', 'copy', 'babelLib', 'babel', 'buildFront'])
+  await task.serial(['clear', 'copy', 'babelLib', 'buildPages', 'babel', 'buildFront'])
 }
 
 export default async function (task) {
