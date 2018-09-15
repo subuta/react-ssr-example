@@ -50,18 +50,15 @@ export const syncPages = () => {
 
   const pages = fetchPages()
 
-  const getPageName = (page) => _.upperFirst(_.camelCase('Page' + page))
-
-  const defs = _.map(pages, (page) => (
-    `const ${getPageName(page)} = loadable(createLoadable(import('.${page}')), { render: renderLoadable })`
-  )).join('\n')
+  // const defs = _.map(pages, (page) => (
+  //   `const ${getPageName(page)} = loadable(createLoadable(import('.${page}')), { render: renderLoadable })`
+    // `const ${getPageName(page)} = loadable(async () => delay(import('.${page}')), { render: renderLoadable })`
+  // )).join('\n')
 
   const Pages = source`
-    ${defs}
-    
     export const Pages = {
       ${_.map(pages, (page) => (source`
-        '${page}': ${getPageName(page)}
+        '${page}': loadable(async () => delay(import('.${page}')), { render: renderLoadable })
       `)).join(',\n')}
     }`
 
