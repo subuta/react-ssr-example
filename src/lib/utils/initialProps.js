@@ -6,22 +6,61 @@ import getPath from './getPath'
 
 const KEY = '__INITIAL_PROPS__'
 
-export const getInitialPropsFromComponent = async (Component) => {
-  // Use getInitialProps if exists.
-  const getInitialProps = Component.getInitialProps || (() => Promise.resolve())
+// Pool of promise. key by path.
+let promises = {}
+
+export const getInitialPropsFromComponent = async (Component, ctx = {}) => {
+  const currentPath = getPath(ctx)
+
+  // Set promise for currentPath if not found.
+  if (!getPromise(currentPath)) {
+    // Use getInitialProps if exists.
+    const fn = Component.getInitialProps || (() => Promise.resolve())
+    // Remember promise for later use.
+    rememberPromise(fn(), currentPath)
+  }
+
+  const promise = getPromise(currentPath)
 
   // Await for resolving initialProps promise.
-  const result = await getInitialProps()
+  const result = await promise
 
   return result || {}
 }
 
-// Keep initialProps reference to ctx.
-export const rememberInitialProps = (initialProps, ctx) => {
-  // Set initialProps to window if browser
-  if (isBrowser) return _.set(window, [KEY], initialProps)
-  _.set(ctx, 'res.locals', { initialProps })
+// Keep promise reference.
+export const rememberPromise = (promise, path) => {
+  _.set(promises, [path], promise)
 }
+
+// Forget promise reference.
+export const forgetPromise = (path) => {
+  // Clear whole promise if path not specified.
+  if (!path) {
+    promises = {}
+    return
+  }
+  _.set(promises, [path], null)
+}
+
+// Keep promise reference.
+export const getPromise = (path) => {
+  return _.get(promises, [path], null)
+}
+
+// Keep initialProps reference to ctx.
+export const rememberInitialProps = (initialProps, ctx = {}) => {
+  // Set initialProps to window if browser
+  const path = getPath(ctx)
+  _.set(ctx, ['res', 'locals', path], initialProps)
+}
+
+// // Keep initialProps reference to ctx.
+// export const mergeInitialProps = (initialProps, ctx = {}, path = '') => {
+//   // Set initialProps to window if browser
+//   if (isBrowser) return _.set(window, [KEY, path], initialProps)
+//   _.set(ctx, ['res', 'locals', path], { initialProps })
+// }
 
 export const forgetInitialProps = () => {
   if (!isBrowser) return
@@ -29,29 +68,35 @@ export const forgetInitialProps = () => {
   _.set(window, [KEY], null)
 }
 
-// Get initialProps from ctx.
+// Get current path initialProps from ctx.
 export const getInitialProps = (ctx = {}) => {
+  const path = getPath(ctx)
+  // Get initialProps from window if browser
+  if (isBrowser) return _.get(window, [KEY, path], null)
+  // Get initialProps from ctx otherwise.
+  return _.get(ctx, ['res', 'locals', path], null)
+}
+
+// Get all initialProps for embed.
+export const getAllInitialProps = (ctx = {}) => {
   // Get initialProps from window if browser
   if (isBrowser) return _.get(window, [KEY], null)
   // Get initialProps from ctx otherwise.
-  return _.get(ctx, 'res.locals.initialProps', null)
+  return _.get(ctx, ['res', 'locals'], null)
 }
 
-// Get initialProps from ctx.
+// Get initialProps from context(react-router's StaticContext).
 export const getInitialPropsFromContext = (context) => {
   // Access ctx from react-router's staticContext.
   const ctx = _.get(context, 'ctx', {})
 
-  // get currentPath and initialProps.
-  const currentPath = getPath(ctx)
-
   // get initialProps ctx/window (if SSR)
-  return _.get(getInitialProps(ctx), currentPath, null)
+  return getInitialProps(ctx)
 }
 
 const getScriptContent = (ctx) => {
   // Retrieve initialProps for page.
-  const initialProps = getInitialProps(ctx)
+  const initialProps = getAllInitialProps(ctx)
   return `window.${KEY} = ${JSON.stringify(initialProps)};`
 }
 

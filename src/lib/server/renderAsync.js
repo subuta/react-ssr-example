@@ -12,10 +12,12 @@ import { getLoadableState } from 'loadable-components/server'
 import {
   getInitialPropsFromComponent,
   rememberInitialProps,
+  forgetPromise,
   getScriptElement as getInitialPropsScriptElement
 } from 'lib/utils/initialProps'
 
 import unwrapModule from 'lib/utils/unwrapModule'
+import getPath from 'lib/utils/getPath'
 
 import { Pages } from 'pages'
 
@@ -40,7 +42,7 @@ export default async (url, options = {}) => {
   }
 
   const app = (
-    <StaticRouter context={{ ctx }} location={ctx.url}>
+    <StaticRouter context={{ ctx }} location={getPath(ctx)}>
       <App />
     </StaticRouter>
   )
@@ -48,15 +50,19 @@ export default async (url, options = {}) => {
   // Wait for loadable-components.
   const loadableState = await getLoadableState(app)
 
-  const Page = _.get(Pages, ctx.url, null)
+  const Page = _.get(Pages, getPath(ctx), null)
   if (Page) {
     // Call getInitialProps of Page if defined.
     // Fetch initialProps and remember it in ctx.
-    const initialProps = await getInitialPropsFromComponent(Page)
-    rememberInitialProps({ [ctx.url]: initialProps }, ctx)
+    const initialProps = await getInitialPropsFromComponent(Page, ctx)
+    rememberInitialProps(initialProps, ctx)
   }
 
   const html = renderToString(app)
+
+  // Clear remembered promise while render.
+  forgetPromise()
+
   const helmet = Helmet.renderStatic()
 
   const scripts = (
