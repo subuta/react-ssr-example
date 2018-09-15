@@ -2,14 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
+import { Pages, preload } from 'pages'
+
 import Counter from 'components/Counter'
-
-import {
-  getInitialPropsFromComponent
-} from 'lib/utils/initialProps'
-
-import { Pages } from 'pages'
-import log from 'lib/utils/log'
 
 export default () => {
   return (
@@ -18,14 +13,7 @@ export default () => {
         <Link
           style={{ margin: '0 8px 0 0' }}
           to={path}
-          onMouseEnter={async () => {
-            log(`[start] Pre-fetching bundle for ${path}`)
-            // fetch Page component(bundle).
-            const Component = await Loadable.load()
-            // fetch initialProps of Page.
-            const initialProps = await getInitialPropsFromComponent(Component, path)
-            log(`[end] Pre-fetching bundle for ${path} initialProps=`, initialProps)
-          }}
+          onMouseEnter={() => preload(Loadable, path)}
           key={path}
         >{path}</Link>
       ))}
