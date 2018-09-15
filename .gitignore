@@ -3,4 +3,4 @@ dist/
 public/
 stats.json
 tmp/
-src/common/pages/index.js
+src/pages/index.js

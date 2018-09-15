@@ -11,8 +11,10 @@ import {
   getInitialPropsFromContext
 } from 'lib/utils/initialProps'
 import { isBrowser } from 'lib/utils/env'
+import asPage from 'lib/hocs/asPage'
 
 import Page404 from 'lib/components/404'
+import unwrapModule from 'lib/utils/unwrapModule'
 
 const delay = promise => { // eslint-disable-line
   if (!isBrowser) return promise
@@ -42,6 +44,11 @@ const onImportError = (err) => { // eslint-disable-line
   console.error('Unknown error', err)
   // Render null component otherwise.
   return () => null
+}
+
+const createLoadable = (module) => async () => { // eslint-disable-line
+  const Component = unwrapModule(await delay(module).catch(onImportError))
+  return asPage(Component)
 }
 
 // Pages will be injected to here for better hmr support.

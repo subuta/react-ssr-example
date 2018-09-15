@@ -1,7 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-import asPage from 'lib/hocs/asPage'
 import Header from 'components/Header'
 
 const Hoge = () => {
@@ -18,4 +17,4 @@ const Hoge = () => {
   )
 }
 
-export default asPage(Hoge)
+export default Hoge

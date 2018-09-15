@@ -7,7 +7,7 @@ import { source } from 'common-tags'
 import {
   LIB_DIR,
   PAGES_DIR
-} from '../../config'
+} from '../../../config'
 
 import { dev } from 'lib/utils/env'
 
@@ -53,7 +53,7 @@ export const syncPages = () => {
   const getPageName = (page) => _.upperFirst(_.camelCase('Page' + page))
 
   const defs = _.map(pages, (page) => (
-    `const ${getPageName(page)} = loadable(async () => delay(import('.${page}')).catch(onImportError), { render: renderLoadable })`
+    `const ${getPageName(page)} = loadable(createLoadable(import('.${page}')), { render: renderLoadable })`
   )).join('\n')
 
   const Pages = source`

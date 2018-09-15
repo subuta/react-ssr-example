@@ -53,13 +53,6 @@ export const rememberInitialProps = (initialProps, ctx = {}) => {
   _.set(ctx, ['res', 'locals', path], initialProps)
 }
 
-// // Keep initialProps reference to ctx.
-// export const mergeInitialProps = (initialProps, ctx = {}, path = '') => {
-//   // Set initialProps to window if browser
-//   if (isBrowser) return _.set(window, [KEY, path], initialProps)
-//   _.set(ctx, ['res', 'locals', path], { initialProps })
-// }
-
 export const forgetInitialProps = () => {
   if (!isBrowser) return
   // Clear initialProps from window if browser

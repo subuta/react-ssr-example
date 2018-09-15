@@ -4,7 +4,6 @@ import _ from 'lodash'
 import fetch from 'isomorphic-unfetch'
 
 import Counter from 'components/Counter'
-import asPage from 'lib/hocs/asPage'
 import Header from 'components/Header'
 
 const Baz = (props) => {
@@ -44,4 +43,4 @@ Baz.getInitialProps = async () => {
   }
 }
 
-export default asPage(Baz)
+export default Baz

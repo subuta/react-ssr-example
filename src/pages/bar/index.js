@@ -2,7 +2,6 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
-import asPage from 'lib/hocs/asPage'
 import Header from 'components/Header'
 
 const Bar = () => {
@@ -27,4 +26,4 @@ Bar.getInitialProps = async () => {
   await wait(1000)
 }
 
-export default asPage(Bar)
+export default Bar
