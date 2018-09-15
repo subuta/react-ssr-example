@@ -53,7 +53,7 @@ export default (Component) => hoistStatics(compose(
       this.promise = Promise.resolve(initialProps)
       if (initialProps === null) {
         // Call getInitialProps otherwise(while client-side routing)
-        this.promise = getInitialPropsFromComponent(Component, ctx)
+        this.promise = getInitialPropsFromComponent(Component, this.path)
       }
 
       initialProps = await this.promise

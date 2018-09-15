@@ -54,7 +54,7 @@ export default async (url, options = {}) => {
   if (Page) {
     // Call getInitialProps of Page if defined.
     // Fetch initialProps and remember it in ctx.
-    const initialProps = await getInitialPropsFromComponent(Page, ctx)
+    const initialProps = await getInitialPropsFromComponent(Page, getPath(ctx))
     rememberInitialProps(initialProps, ctx)
   }
 
