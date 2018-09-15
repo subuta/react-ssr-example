@@ -16,6 +16,7 @@ const {
   ROOT_DIR,
   FRONT_DIR,
   SRC_DIR,
+  LIB_DIR,
   PUBLIC_DIR
 } = require('./config.js')
 
@@ -46,6 +47,10 @@ config
 config.resolve.modules
   .add('node_modules')
   .add(SRC_DIR)
+
+// Add modules dir
+config.resolve.alias
+  .set('lib', LIB_DIR)
 
 // Load and use `.babelrc.web`
 const babelrc = JSON.parse(fs.readFileSync(path.resolve(ROOT_DIR, '.babelrc.web')))
