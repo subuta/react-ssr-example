@@ -1,11 +1,10 @@
 import {
   PUBLIC_DIR,
-  DIST_DIR
+  DIST_DIR,
+  DIST_LIB_DIR
 } from './config'
 
 const src = {
-  pages: 'pages/**/*',
-  server: 'src/**/!(front)/*.js',
   copy: [
     'src/front/**/*.!(js)'
   ]
@@ -13,12 +12,13 @@ const src = {
 
 const dist = {
   p: PUBLIC_DIR,
-  d: DIST_DIR
+  d: DIST_DIR,
+  dLib: DIST_LIB_DIR
 }
 
 // Clear dist.
 export async function clear (task) {
-  await task.clear([dist.p, dist.d])
+  await task.clear([dist.p, dist.d, dist.dLib])
 }
 
 // Copy front-end files.
@@ -46,23 +46,21 @@ export async function stats (task) {
   await task.serial(['analyze', 'showStats'])
 }
 
+// Do build lib.
+// FIXME: Replace here to @taskr/babel after babel v7 integration merged into master.
+export async function babelLib (task) {
+  await task.source('src').shell(`babel lib --out-dir distLib`)
+}
+
 // Do build server-side.
+// FIXME: Replace here to @taskr/babel after babel v7 integration merged into master.
 export async function babel (task) {
-  await task.source(src.server)
-    .babel({
-      'extends': './.babelrc',
-      'plugins': [
-        ['babel-plugin-module-resolver', {
-          'root': ['./dist']
-        }]
-      ]
-    })
-    .target(dist.d)
+  await task.source('src').shell(`babel src --out-dir dist`)
 }
 
 // Do build back/front-end.
 export async function build (task) {
-  await task.serial(['clear', 'copy', 'babel', 'buildFront'])
+  await task.serial(['clear', 'copy', 'babelLib', 'babel', 'buildFront'])
 }
 
 export default async function (task) {

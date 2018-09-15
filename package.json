@@ -8,8 +8,8 @@
     "serve": "run-p serve:server serve:client",
     "serve:server": "npm run copy && DEBUG=app:* node src/server/index.js",
     "serve:client": "webpack-dev-server",
-    "servep": "DEBUG=app:* NODE_PATH=dist NODE_ENV=production node dist/server/index.js",
-    "build": "taskr build",
+    "servep": "DEBUG=app:* NODE_ENV=production node dist/server/index.js",
+    "build": "NODE_ENV=production taskr build",
     "analyze": "taskr analyze",
     "show-stats": "taskr showStats",
     "stats": "taskr stats",
@@ -33,6 +33,7 @@
   ],
   "homepage": "https://github.com/subuta/react-ssr-example#readme",
   "dependencies": {
+    "@babel/cli": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
     "babel-plugin-dynamic-import-node": "^2.1.0",
     "bluebird": "^3.5.2",
