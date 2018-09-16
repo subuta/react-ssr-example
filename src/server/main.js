@@ -5,7 +5,7 @@ import serve from 'koa-static'
 import clearModule from 'clear-module'
 import path from 'path'
 
-import syncPages from 'lib/utils/syncPages'
+import syncPages from 'lib/syncPages'
 
 import {
   ROOT_DIR,
