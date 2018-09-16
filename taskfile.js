@@ -28,7 +28,7 @@ export async function copy (task) {
 
 // Do build pages manually(for Production).
 export async function buildPages (task) {
-  await task.source('src').shell('NODE_ENV=production node lib/cli sync-pages')
+  await task.source('src').shell('NODE_ENV=development node lib/bin sync-pages')
 }
 
 // Do build front-end(for Production).
