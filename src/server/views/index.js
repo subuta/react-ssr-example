@@ -1,11 +1,11 @@
 import Router from 'koa-router'
 
-import renderAsync from 'lib/server/renderAsync'
+import { asyncRenderToString } from 'lib'
 
 const router = new Router()
 
 router.get('*', async (ctx) => {
-  ctx.body = await renderAsync(ctx.url)
+  ctx.body = await asyncRenderToString(ctx.url)
 })
 
 export default router
