@@ -20,5 +20,18 @@
     "loadable-components/babel",
     "babel-plugin-dynamic-import-node",
     "transform-promise-to-bluebird"
-  ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        ["babel-plugin-module-resolver", {
+          "root": "./",
+          "alias": {
+            "src": "./dist",
+            "lib": "./distLib"
+          }
+        }]
+      ]
+    }
+  }
 }
