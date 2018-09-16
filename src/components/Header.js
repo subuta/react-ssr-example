@@ -2,9 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
-import { Pages, preload } from 'pages'
+import Pages from 'src/pages'
+import { preload } from 'lib/utils/loadable'
 
-import Counter from 'components/Counter'
+import Counter from 'src/components/Counter'
 
 export default () => {
   return (

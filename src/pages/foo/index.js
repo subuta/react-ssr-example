@@ -1,8 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-import Counter from 'components/Counter'
-import Header from 'components/Header'
+import Counter from 'src/components/Counter'
+import Header from 'src/components/Header'
 
 const Foo = () => {
   return (

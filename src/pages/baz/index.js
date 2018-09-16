@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet'
 import _ from 'lodash'
 import fetch from 'isomorphic-unfetch'
 
-import Counter from 'components/Counter'
-import Header from 'components/Header'
+import Counter from 'src/components/Counter'
+import Header from 'src/components/Header'
 
 const Baz = (props) => {
   const {

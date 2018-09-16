@@ -12,10 +12,7 @@
   ],
   "plugins": [
     ["babel-plugin-module-resolver", {
-      "root": [".", "./src"],
-      "alias": {
-        "pages": "./src/pages"
-      }
+      "root": "./"
     }],
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
     "@babel/plugin-proposal-object-rest-spread",
@@ -23,18 +20,5 @@
     "loadable-components/babel",
     "babel-plugin-dynamic-import-node",
     "transform-promise-to-bluebird"
-  ],
-  "env": {
-    "production": {
-      "plugins": [
-        ["babel-plugin-module-resolver", {
-          "root": [".", "./dist"],
-          "alias": {
-            "lib": "./distLib",
-            "pages": "./dist/pages"
-          }
-        }]
-      ]
-    }
-  }
+  ]
 }

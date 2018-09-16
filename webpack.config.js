@@ -47,14 +47,14 @@ config
 // Add modules dir
 config.resolve.modules
   .add('node_modules')
-  .add(SRC_DIR)
-
-// Add modules dir
-config.resolve.alias
-  .set('lib', LIB_DIR)
+  .add(ROOT_DIR)
 
 // Load and use `.babelrc.web`
 const babelrc = JSON.parse(fs.readFileSync(path.resolve(ROOT_DIR, '.babelrc.web')))
+
+// config.externals({
+//   ''
+// })
 
 // Add babel-loader for JS.
 config.module

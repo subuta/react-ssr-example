@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import wait from 'waait'
 
-import Header from 'components/Header'
+import Header from 'src/components/Header'
 
 const Bar = () => {
   return (
