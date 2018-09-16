@@ -26,6 +26,7 @@ const config = new Config()
 // Detect is dev
 const isAnalyze = !!process.env.ANALYZE
 const dev = process.env.NODE_ENV !== 'production' && !isAnalyze
+const port = parseInt(process.env.PORT, 10) || 3000
 
 // Interact with entry points
 config
@@ -74,7 +75,7 @@ config.devServer
   .noInfo(true)
   .contentBase(PUBLIC_DIR)
   .proxy({
-    '/': 'http://localhost:3000'
+    '/': `http://localhost:${port}`
   })
 
 // SEE: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
