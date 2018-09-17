@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
 import Pages from 'src/pages'
-import { preload } from 'lib/utils/loadable'
+import { preload } from 'lib/common/utils/loadable'
 
 import Counter from 'src/components/Counter'
 

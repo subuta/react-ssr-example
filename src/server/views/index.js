@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { asyncRenderToString } from 'lib'
+import { asyncRenderToString } from 'lib/server'
 import Pages from 'src/pages'
 
 const router = new Router()

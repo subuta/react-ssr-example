@@ -1,6 +1,6 @@
 import '@babel/polyfill'
 
-import { render } from 'lib'
+import { render } from 'lib/client'
 import Pages from 'src/pages'
 
 // SEE: http://bluebirdjs.com/docs/api/promise.config.html
