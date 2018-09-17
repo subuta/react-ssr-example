@@ -1,6 +1,7 @@
 import '@babel/polyfill'
 
 import { render } from 'lib'
+import Pages from 'src/pages'
 
 // SEE: http://bluebirdjs.com/docs/api/promise.config.html
 // Add settings for bluebird.
@@ -16,7 +17,7 @@ Promise.config({
 })
 
 const main = async () => {
-  render()
+  render(Pages)
 }
 
 // Native

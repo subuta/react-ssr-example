@@ -1,11 +1,12 @@
 import Router from 'koa-router'
 
 import { asyncRenderToString } from 'lib'
+import Pages from 'src/pages'
 
 const router = new Router()
 
 router.get('*', async (ctx) => {
-  ctx.body = await asyncRenderToString(ctx.url)
+  ctx.body = await asyncRenderToString(Pages, ctx.url)
 })
 
 export default router
